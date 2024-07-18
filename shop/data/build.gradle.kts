@@ -33,5 +33,6 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.shop.domain)
+    implementation(projects.core.database)
 }

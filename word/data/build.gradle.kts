@@ -33,5 +33,6 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.word.domain)
+    implementation(projects.core.database)
 }
