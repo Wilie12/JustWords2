@@ -21,4 +21,17 @@ dependencyResolutionManagement {
 
 rootProject.name = "JustWords2"
 include(":app")
- 
+include(":auth:data")
+include(":auth:domain")
+include(":auth:presentation")
+include(":core:presentation:designsystem")
+include(":core:presentation:ui")
+include(":core:domain")
+include(":core:data")
+include(":core:database")
+include(":word:data")
+include(":word:domain")
+include(":word:presentation")
+include(":shop:data")
+include(":shop:domain")
+include(":shop:presentation")
