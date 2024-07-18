@@ -19,6 +19,8 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "JustWords2"
 include(":app")
 include(":auth:data")

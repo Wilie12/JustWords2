@@ -33,5 +33,5 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.word.domain)
 }
