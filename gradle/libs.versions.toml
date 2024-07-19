@@ -105,3 +105,5 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 room = { id = "androidx.room", version.ref = "room" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 mapsplatform-secrets-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsPlugin"}
+
+justwords2-android-application = { id = "justwords2.android.application", version = "unspecified" }
