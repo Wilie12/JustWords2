@@ -107,3 +107,4 @@ org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org
 mapsplatform-secrets-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsPlugin"}
 
 justwords2-android-application = { id = "justwords2.android.application", version = "unspecified" }
+justwords2-android-application-compose = { id = "justwords2.android.application.compose", version = "unspecified" }
