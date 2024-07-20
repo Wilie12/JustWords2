@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.justwords2.android.application)
+    alias(libs.plugins.justwords2.android.application.compose)
 }
 
 android {
@@ -10,12 +10,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-    }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
