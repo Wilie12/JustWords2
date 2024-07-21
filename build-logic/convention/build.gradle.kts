@@ -42,5 +42,9 @@ gradlePlugin {
             id = "justwords2.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
         }
+        register("jvmKtor") {
+            id = "justwords2.jvm.ktor"
+            implementationClass = "JvmKtorConventionPlugin"
+        }
     }
 }
