@@ -112,6 +112,7 @@ justwords2-android-library = { id = "justwords2.android.library", version = "uns
 justwords2-android-library-compose = { id = "justwords2.android.library.compose", version = "unspecified" }
 justwords2-android-feature-ui = { id = "justwords2.android.feature.ui", version = "unspecified" }
 justwords2-android-room = { id = "justwords2.android.room", version = "unspecified" }
+justwords2-jvm-library = { id = "justwords2.jvm.library", version = "unspecified" }
 
 [bundles]
 compose = [
