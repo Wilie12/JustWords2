@@ -108,3 +108,4 @@ mapsplatform-secrets-plugin = { id = "com.google.android.libraries.mapsplatform.
 
 justwords2-android-application = { id = "justwords2.android.application", version = "unspecified" }
 justwords2-android-application-compose = { id = "justwords2.android.application.compose", version = "unspecified" }
+justwords2-android-library = { id = "justwords2.android.library", version = "unspecified" }
