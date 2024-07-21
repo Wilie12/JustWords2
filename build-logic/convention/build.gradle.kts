@@ -34,5 +34,9 @@ gradlePlugin {
             id = "justwords2.android.feature.ui"
             implementationClass = "AndroidFeatureUiConventionPlugin"
         }
+        register("androidRoom") {
+            id = "justwords2.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
     }
 }
