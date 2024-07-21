@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.justwords2.android.application.compose)
+    alias(libs.plugins.justwords2.jvm.ktor)
 }
 
 android {
