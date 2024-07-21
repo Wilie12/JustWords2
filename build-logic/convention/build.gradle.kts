@@ -22,5 +22,9 @@ gradlePlugin {
             id = "justwords2.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
+        register("androidLibrary") {
+            id = "justwords2.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
     }
 }
