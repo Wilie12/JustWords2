@@ -38,5 +38,9 @@ gradlePlugin {
             id = "justwords2.android.room"
             implementationClass = "AndroidRoomConventionPlugin"
         }
+        register("jvmLibrary") {
+            id = "justwords2.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
     }
 }
