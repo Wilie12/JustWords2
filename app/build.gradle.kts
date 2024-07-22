@@ -73,4 +73,8 @@ dependencies {
     implementation(projects.shop.domain)
     implementation(projects.shop.presentation)
     implementation(projects.shop.data)
+
+    implementation(projects.user.domain)
+    implementation(projects.user.presentation)
+    implementation(projects.user.data)
 }

@@ -39,6 +39,10 @@
             <option value="$PROJECT_DIR$/shop/data" />
             <option value="$PROJECT_DIR$/shop/domain" />
             <option value="$PROJECT_DIR$/shop/presentation" />
+            <option value="$PROJECT_DIR$/user" />
+            <option value="$PROJECT_DIR$/user/data" />
+            <option value="$PROJECT_DIR$/user/domain" />
+            <option value="$PROJECT_DIR$/user/presentation" />
             <option value="$PROJECT_DIR$/word" />
             <option value="$PROJECT_DIR$/word/data" />
             <option value="$PROJECT_DIR$/word/domain" />
