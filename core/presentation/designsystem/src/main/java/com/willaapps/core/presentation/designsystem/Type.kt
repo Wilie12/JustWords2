@@ -1,4 +1,4 @@
-package com.willaapps.justwords2.ui.theme
+package com.willaapps.core.presentation.designsystem
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
