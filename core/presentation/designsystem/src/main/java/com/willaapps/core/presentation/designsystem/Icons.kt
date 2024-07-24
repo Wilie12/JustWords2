@@ -16,3 +16,6 @@ val UserIcon: ImageVector
 val ShopIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.shop)
+val LogoIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.logo)
