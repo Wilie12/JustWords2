@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -59,7 +60,8 @@ fun ActionButton(
                 text = text,
                 modifier = Modifier
                     .alpha(if (isLoading) 0f else 1f),
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp
             )
         }
     }
@@ -104,7 +106,8 @@ fun OutlinedActionButton(
                 text = text,
                 modifier = Modifier
                     .alpha(if (isLoading) 0f else 1f),
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                fontSize = 16.sp
             )
         }
     }
