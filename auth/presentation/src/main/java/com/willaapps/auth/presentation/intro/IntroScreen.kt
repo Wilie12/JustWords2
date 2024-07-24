@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.willaapps.auth.presentation.intro
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +13,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -54,6 +55,13 @@ fun IntroScreenRoot(
 fun IntroScreen(
     onAction: (IntroAction) -> Unit
 ) {
+    val backgroundTexts = listOf(
+        stringResource(id = R.string.bg_text_1),
+        stringResource(id = R.string.bg_text_2),
+        stringResource(id = R.string.bg_text_3),
+        stringResource(id = R.string.bg_text_4),
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -84,13 +92,20 @@ fun IntroScreen(
                             .alpha(0.15f)
                             .rotate(45f)
                     ) {
-                        for (i in 1..15) {
-                            BackgroundText(
-                                text = "score strzelić achieve osiągnąć compete rywalizować equipment sprzęt",
-                                modifier = Modifier
-                                    .offset(x = (-140).dp, ((50 * i) - 100).dp)
+                        var index by remember {
+                            mutableIntStateOf(1)
+                        }
 
-                            )
+                        for (i in 1..4) {
+                            backgroundTexts.forEach { text ->
+                                BackgroundText(
+                                    text = text,
+                                    modifier = Modifier
+                                        .offset(x = (-140).dp, ((50 * index) - 100).dp)
+
+                                )
+                                index++
+                            }
                         }
                     }
                     Icon(
