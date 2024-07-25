@@ -22,3 +22,12 @@ val LogoIcon: ImageVector
 val BackIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.back)
+val CheckIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.check)
+val CheckCircleIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.check_circle)
+val UnCheckCircleIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.uncheck_circle)

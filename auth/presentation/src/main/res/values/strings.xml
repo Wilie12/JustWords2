@@ -7,4 +7,19 @@
     <string name="bg_text_2">brand marka hire zatrudnić outfit strój encourage zachęcać blow wiać</string>
     <string name="bg_text_3">donate ofiarować cover przykryć flood powódź increase zwiększać</string>
     <string name="bg_text_4">shake potrząsać violently gwałtownie adventure przygoda cave jaskinia</string>
+    <string name="username">Username</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="username_can_t_be_empty">Username can\'t be empty</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="email">Email</string>
+    <string name="must_be_a_valid_email">Must be a valid email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="password">Password</string>
+    <string name="at_least_x_characters">At least %d characters</string>
+    <string name="at_least_one_number">At least one number</string>
+    <string name="contains_lowercase_character">Contains lowercase character</string>
+    <string name="contrains_uppercase_character">Contains uppercase character</string>
+    <string name="sign_up">Sign up</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="sign_in">Sign in</string>
 </resources>
