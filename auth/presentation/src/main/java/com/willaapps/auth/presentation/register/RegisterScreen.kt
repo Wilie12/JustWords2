@@ -98,7 +98,7 @@ fun RegisterScreen(
             ) {
                 JwTextField(
                     state = state.username,
-                    endIcon = if (state.isUsernameValid) {
+                    endIcon = if (state.isValidUsername) {
                         CheckIcon
                     } else null,
                     hint = stringResource(R.string.enter_your_username),
@@ -109,7 +109,7 @@ fun RegisterScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 JwTextField(
                     state = state.email,
-                    endIcon = if (state.isEmailValid) {
+                    endIcon = if (state.isValidEmail) {
                         CheckIcon
                     } else null,
                     hint = stringResource(R.string.enter_your_email),

@@ -1,5 +1,5 @@
-@file:Suppress("OPT_IN_USAGE_FUTURE_ERROR")
 @file:OptIn(ExperimentalFoundationApi::class)
+@file:Suppress("OPT_IN_USAGE_FUTURE_ERROR")
 
 package com.willaapps.auth.presentation.register
 
@@ -24,22 +24,31 @@ class RegisterViewModel(
     init {
         state.username.textAsFlow()
             .onEach { username ->
+                val isValidUsername = userDataValidator.isValidUsername(username.toString())
                 state = state.copy(
-                    isUsernameValid = userDataValidator.isValidUsername(username.toString())
+                    isValidUsername = isValidUsername,
+                    canRegister = isValidUsername && state.isValidEmail
+                            && state.passwordValidationState.isValidPassword && !state.isRegistering
                 )
             }
             .launchIn(viewModelScope)
         state.email.textAsFlow()
             .onEach { email ->
+                val isValidEmail = userDataValidator.isValidEmail(email.toString())
                 state = state.copy(
-                    isEmailValid = userDataValidator.isValidEmail(email.toString())
+                    isValidEmail = isValidEmail,
+                    canRegister = isValidEmail && state.isValidUsername
+                            && state.passwordValidationState.isValidPassword && !state.isRegistering
                 )
             }
             .launchIn(viewModelScope)
         state.password.textAsFlow()
             .onEach { password ->
+                val passwordValidationState = userDataValidator.validatePassword(password.toString())
                 state = state.copy(
-                    passwordValidationState = userDataValidator.validatePassword(password.toString())
+                    passwordValidationState = passwordValidationState,
+                    canRegister = passwordValidationState.isValidPassword && state.isValidUsername
+                            && state.isValidEmail && !state.isRegistering
                 )
             }
             .launchIn(viewModelScope)

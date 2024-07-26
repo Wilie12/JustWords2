@@ -8,9 +8,9 @@ import com.willaapps.auth.domain.PasswordValidationState
 
 data class RegisterState(
     val username: TextFieldState = TextFieldState(),
-    val isUsernameValid: Boolean = false,
+    val isValidUsername: Boolean = false,
     val email: TextFieldState = TextFieldState(),
-    val isEmailValid: Boolean = false,
+    val isValidEmail: Boolean = false,
     val password: TextFieldState = TextFieldState(),
     val isPasswordVisible: Boolean = false,
     val passwordValidationState: PasswordValidationState = PasswordValidationState(),

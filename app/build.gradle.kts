@@ -42,6 +42,8 @@ dependencies {
     // Crypto
     implementation(libs.androidx.security.crypto.ktx)
 
+    implementation(libs.bundles.koin)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,19 +64,19 @@ dependencies {
     implementation(projects.core.database)
     implementation(projects.core.data)
 
-    implementation(projects.auth.domain)
     implementation(projects.auth.presentation)
+    implementation(projects.auth.domain)
     implementation(projects.auth.data)
 
-    implementation(projects.word.domain)
     implementation(projects.word.presentation)
+    implementation(projects.word.domain)
     implementation(projects.word.data)
 
-    implementation(projects.shop.domain)
     implementation(projects.shop.presentation)
+    implementation(projects.shop.domain)
     implementation(projects.shop.data)
 
-    implementation(projects.user.domain)
     implementation(projects.user.presentation)
+    implementation(projects.user.domain)
     implementation(projects.user.data)
 }
