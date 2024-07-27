@@ -22,4 +22,6 @@
     <string name="sign_up">Sign up</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="sign_in">Sign in</string>
+    <string name="error_email_exists">A user with that email already exists.</string>
+    <string name="registration_successful">Registration successful! You can log in now.</string>
 </resources>
