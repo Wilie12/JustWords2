@@ -1,6 +1,5 @@
 package com.willaapps.justwords2
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.willaapps.auth.presentation.intro.IntroScreenRoot
+import com.willaapps.auth.presentation.login.LoginScreenRoot
 import com.willaapps.auth.presentation.register.RegisterScreenRoot
 
 @Composable
@@ -57,7 +57,27 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
             )
         }
         composable(route = "login") {
-            Text(text = "Login")
+            LoginScreenRoot(
+                onBackClick = {
+                    navController.navigateUp()
+                },
+                onSignUpClick = {
+                    navController.navigate("register") {
+                        popUpTo("login") {
+                            inclusive = true
+                            saveState = true
+                        }
+                        restoreState = true
+                    }
+                },
+                onLoginSuccess = {
+                    navController.navigate("word") {
+                        popUpTo("auth") {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 }

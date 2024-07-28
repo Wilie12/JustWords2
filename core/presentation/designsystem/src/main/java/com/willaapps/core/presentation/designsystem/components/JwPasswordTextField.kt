@@ -82,7 +82,7 @@ fun JwPasswordTextField(
             ),
             cursorBrush = SolidColor(Color(0xFF121211)),
             modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(100f))
                 .background(
                     if (isFocused) {
                         Color(0xFF5E5E5E).copy(
@@ -99,7 +99,7 @@ fun JwPasswordTextField(
                     } else {
                         Color.Transparent
                     },
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(100f)
                 )
                 .padding(horizontal = 12.dp)
                 .onFocusChanged {
