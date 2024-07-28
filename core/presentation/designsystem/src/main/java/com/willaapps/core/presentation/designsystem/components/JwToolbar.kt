@@ -1,16 +1,16 @@
-
-
 package com.willaapps.core.presentation.designsystem.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,13 +34,6 @@ fun JwToolbar(
             .padding(16.dp)
             .background(Color.Transparent)
     ) {
-        IconButton(onClick = onBackClick) {
-            Icon(
-                imageVector = BackIcon,
-                contentDescription = stringResource(R.string.go_back),
-                tint = Color(0xFFD7D9CE)
-            )
-        }
         Text(
             text = text,
             fontSize = 20.sp,
@@ -48,6 +41,14 @@ fun JwToolbar(
             fontWeight = FontWeight.Medium,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
+        )
+        Icon(
+            imageVector = BackIcon,
+            contentDescription = stringResource(R.string.go_back),
+            tint = Color(0xFFD7D9CE),
+            modifier = Modifier
+                .clip(CircleShape)
+                .clickable { onBackClick() }
         )
     }
 }
