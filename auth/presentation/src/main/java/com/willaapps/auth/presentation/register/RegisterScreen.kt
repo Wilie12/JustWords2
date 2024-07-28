@@ -66,6 +66,7 @@ fun RegisterScreenRoot(
                     Toast.LENGTH_LONG
                 ).show()
             }
+
             RegisterEvent.RegistrationSuccess -> {
                 keyboardController?.hide()
                 Toast.makeText(
@@ -108,7 +109,9 @@ fun RegisterScreen(
         Column {
             JwToolbar(
                 text = stringResource(id = R.string.register),
-                onBackClick = {  },
+                onBackClick = {
+                    onAction(RegisterAction.OnBackClick)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .systemBarsPadding()
@@ -132,7 +135,10 @@ fun RegisterScreen(
                     } else null,
                     hint = stringResource(R.string.enter_your_username),
                     title = stringResource(R.string.username),
-                    additionalInfo = stringResource(R.string.username_can_t_be_empty),
+                    additionalInfo =
+                    if (state.username.text.toString().isBlank()) {
+                        stringResource(R.string.username_can_t_be_empty)
+                    } else null,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(16.dp))
