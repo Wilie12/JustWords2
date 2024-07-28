@@ -94,7 +94,7 @@ fun JwTextField(
             lineLimits = TextFieldLineLimits.SingleLine,
             cursorBrush = SolidColor(Color(0xFF121211)),
             modifier = Modifier
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(100f))
                 .background(
                     if (isFocused) {
                         Color(0xFF5E5E5E).copy(
@@ -111,7 +111,7 @@ fun JwTextField(
                     } else {
                         Color.Transparent
                     },
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(100f)
                 )
                 .padding(12.dp)
                 .onFocusChanged {
