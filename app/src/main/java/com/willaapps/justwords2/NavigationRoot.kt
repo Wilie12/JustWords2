@@ -49,7 +49,7 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     }
                 },
                 onBackClick = {
-                    navController.popBackStack()
+                    navController.navigateUp()
                 },
                 onSuccessfulRegistration = {
                     navController.navigate("login")
