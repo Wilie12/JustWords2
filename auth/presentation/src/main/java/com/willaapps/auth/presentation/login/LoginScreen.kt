@@ -28,6 +28,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -131,6 +132,7 @@ fun LoginScreen(
                     hint = stringResource(R.string.enter_your_email),
                     title = stringResource(R.string.email),
                     additionalInfo = stringResource(R.string.must_be_a_valid_email),
+                    keyboardType = KeyboardType.Email,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -147,7 +149,7 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.weight(1f))
                 ActionButton(
-                    text = stringResource(id = R.string.sign_up),
+                    text = stringResource(id = R.string.sign_in),
                     isLoading = state.isLoggingIn,
                     enabled = state.canLogin && !state.isLoggingIn,
                     modifier = Modifier.fillMaxWidth(),

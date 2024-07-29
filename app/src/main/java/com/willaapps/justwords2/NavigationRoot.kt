@@ -1,5 +1,6 @@
 package com.willaapps.justwords2
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -19,6 +20,7 @@ fun NavigationRoot(
         startDestination = "auth"
     ) {
         authGraph(navController)
+        wordGraph(navController)
     }
 }
 
@@ -78,6 +80,17 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     }
                 }
             )
+        }
+    }
+}
+
+private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
+    navigation(
+        startDestination = "start",
+        route = "word"
+    ) {
+        composable("start") {
+            Text(text = "START")
         }
     }
 }
