@@ -31,3 +31,6 @@ val CheckCircleIcon: ImageVector
 val UnCheckCircleIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.uncheck_circle)
+val ForwardIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.forward)
