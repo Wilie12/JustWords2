@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Welcome, %s</string>
+    <string name="profile">Profile</string>
+    <string name="daily_goal">Daily goal</string>
+    <string name="practice_more_to_finish_daily_goal">Practice more to finish daily goal</string>
+    <string name="choose_book">Choose book</string>
+</resources>
