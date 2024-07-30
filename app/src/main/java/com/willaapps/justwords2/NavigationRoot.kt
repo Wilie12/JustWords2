@@ -13,11 +13,12 @@ import com.willaapps.auth.presentation.register.RegisterScreenRoot
 
 @Composable
 fun NavigationRoot(
-    navController: NavHostController
+    navController: NavHostController,
+    isLoggedIn: Boolean
 ) {
     NavHost(
         navController = navController,
-        startDestination = "auth"
+        startDestination = if (isLoggedIn) "word" else "auth"
     ) {
         authGraph(navController)
         wordGraph(navController)
@@ -54,7 +55,11 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     navController.navigateUp()
                 },
                 onSuccessfulRegistration = {
-                    navController.navigate("login")
+                    navController.navigate("login") {
+                        popUpTo("register") {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
