@@ -1,6 +1,7 @@
 package com.willaapps.word.presentation.start.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,6 +37,9 @@ fun BookItem(
             .fillMaxWidth()
             .clip(RoundedCornerShape(100f))
             .background(color = Color(book.color))
+            .clickable {
+                onBookClick(book.bookId)
+            }
             .padding(16.dp)
     ) {
         Text(
@@ -45,16 +48,12 @@ fun BookItem(
             fontSize = 16.sp,
             color = Color(0xFFD7D9CE)
         )
-        IconButton(
-            onClick = { onBookClick(book.bookId) }
-        ) {
-            Icon(
-                imageVector = ForwardIcon,
-                contentDescription = "Open book ${book.name}",
-                tint = Color(0xFFD7D9CE),
-                modifier = Modifier.size(32.dp)
-            )
-        }
+        Icon(
+            imageVector = ForwardIcon,
+            contentDescription = "Open book ${book.name}",
+            tint = Color(0xFFD7D9CE),
+            modifier = Modifier.size(32.dp)
+        )
     }
 }
 
