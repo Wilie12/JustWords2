@@ -8,6 +8,7 @@ import org.bson.types.ObjectId
 data class SetEntity(
     val name: String,
     val bookId: String,
+    val numberOfGroups: Int,
     @PrimaryKey(autoGenerate = false)
     val id: String = ObjectId().toHexString()
 )
