@@ -23,11 +23,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.ShopIcon
 import com.willaapps.core.presentation.designsystem.UserIcon
 import com.willaapps.core.presentation.designsystem.components.GradientBall
-import com.willaapps.word.domain.Book
 import com.willaapps.word.presentation.R
 import com.willaapps.word.presentation.start.components.BookItem
 import com.willaapps.word.presentation.start.components.DailyGoalBox
