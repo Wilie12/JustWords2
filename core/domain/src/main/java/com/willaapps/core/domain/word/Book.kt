@@ -1,4 +1,4 @@
-package com.willaapps.word.domain
+package com.willaapps.core.domain.word
 
 data class Book(
     val name: String,

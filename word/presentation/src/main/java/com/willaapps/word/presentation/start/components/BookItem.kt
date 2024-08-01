@@ -20,9 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.ForwardIcon
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
-import com.willaapps.word.domain.Book
 
 @Composable
 fun BookItem(

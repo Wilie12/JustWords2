@@ -19,11 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.components.GradientBall
 import com.willaapps.core.presentation.designsystem.components.JwToolbar
-import com.willaapps.word.domain.Book
-import com.willaapps.word.domain.WordSet
+import com.willaapps.core.domain.word.WordSet
 import com.willaapps.word.presentation.set_list.components.SetItem
 import org.koin.androidx.compose.koinViewModel
 

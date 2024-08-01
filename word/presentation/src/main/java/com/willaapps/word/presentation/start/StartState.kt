@@ -1,6 +1,6 @@
 package com.willaapps.word.presentation.start
 
-import com.willaapps.word.domain.Book
+import com.willaapps.core.domain.word.Book
 
 data class StartState(
     val userName: String = "",

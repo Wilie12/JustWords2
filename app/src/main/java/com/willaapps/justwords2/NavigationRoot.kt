@@ -1,6 +1,5 @@
 package com.willaapps.justwords2
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -10,6 +9,7 @@ import androidx.navigation.navigation
 import com.willaapps.auth.presentation.intro.IntroScreenRoot
 import com.willaapps.auth.presentation.login.LoginScreenRoot
 import com.willaapps.auth.presentation.register.RegisterScreenRoot
+import com.willaapps.word.presentation.start.StartScreenRoot
 
 @Composable
 fun NavigationRoot(
@@ -95,7 +95,13 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
         route = "word"
     ) {
         composable("start") {
-            Text(text = "START")
+            StartScreenRoot(
+                onUserClick = { /*TODO*/ },
+                onShopClick = { /*TODO*/ },
+                onBookClick = { bookId ->
+                    // TODO
+                }
+            )
         }
     }
 }

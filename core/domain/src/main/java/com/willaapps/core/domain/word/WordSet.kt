@@ -1,4 +1,4 @@
-package com.willaapps.word.domain
+package com.willaapps.core.domain.word
 
 data class WordSet(
     val name: String,
