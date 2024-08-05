@@ -40,7 +40,10 @@ fun BookItem(
             .clickable {
                 onBookClick(book.bookId)
             }
-            .padding(16.dp)
+            .padding(
+                vertical = 20.dp,
+                horizontal = 16.dp
+            )
     ) {
         Text(
             text = book.name,
