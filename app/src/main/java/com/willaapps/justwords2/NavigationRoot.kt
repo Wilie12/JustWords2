@@ -3,12 +3,15 @@ package com.willaapps.justwords2
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.willaapps.auth.presentation.intro.IntroScreenRoot
 import com.willaapps.auth.presentation.login.LoginScreenRoot
 import com.willaapps.auth.presentation.register.RegisterScreenRoot
+import com.willaapps.word.presentation.set_list.SetListScreenRoot
 import com.willaapps.word.presentation.start.StartScreenRoot
 
 @Composable
@@ -99,7 +102,24 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
                 onUserClick = { /*TODO*/ },
                 onShopClick = { /*TODO*/ },
                 onBookClick = { bookId ->
-                    // TODO
+                    navController.navigate("setList/$bookId")
+                }
+            )
+        }
+        composable(
+            route = "setList/{bookId}",
+            arguments = listOf(
+                navArgument(name = "bookId") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            SetListScreenRoot(
+                onBackClick = {
+                    navController.navigateUp()
+                              },
+                onSelectedGroupClick = { _, _, _ ->
+
                 }
             )
         }

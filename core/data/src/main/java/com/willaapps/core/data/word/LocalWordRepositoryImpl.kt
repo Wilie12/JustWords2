@@ -14,6 +14,10 @@ class LocalWordRepositoryImpl(
         return localWordDataSource.getBooks()
     }
 
+    override fun getLocalBookById(bookId: String): Flow<Book> {
+        return localWordDataSource.getBookById(bookId)
+    }
+
     override fun getLocalWordSets(bookId: String): Flow<List<WordSet>> {
         return localWordDataSource.getWordSets(bookId)
     }

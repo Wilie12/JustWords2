@@ -25,4 +25,7 @@ interface WordDao {
 
     @Query("SELECT * FROM BookEntity")
     fun getBookList(): Flow<List<BookEntity>>
+
+    @Query("SELECT * FROM BookEntity WHERE id =:bookId")
+    fun getBookById(bookId: String): Flow<BookEntity>
 }
