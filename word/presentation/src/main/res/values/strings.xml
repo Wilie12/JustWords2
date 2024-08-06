@@ -5,4 +5,11 @@
     <string name="daily_goal">Daily goal</string>
     <string name="practice_more_to_finish_daily_goal">Practice more to finish daily goal</string>
     <string name="choose_book">Choose book</string>
+    <string name="words">Words</string>
+    <string name="good">Good</string>
+    <string name="bad">Bad</string>
+    <string name="answer">Answer</string>
+    <string name="check">Check</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
 </resources>

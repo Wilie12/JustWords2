@@ -13,6 +13,7 @@ import com.willaapps.auth.presentation.login.LoginScreenRoot
 import com.willaapps.auth.presentation.register.RegisterScreenRoot
 import com.willaapps.word.presentation.set_list.SetListScreenRoot
 import com.willaapps.word.presentation.start.StartScreenRoot
+import com.willaapps.word.presentation.word.WordScreenRoot
 
 @Composable
 fun NavigationRoot(
@@ -117,9 +118,35 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
             SetListScreenRoot(
                 onBackClick = {
                     navController.navigateUp()
-                              },
-                onSelectedGroupClick = { _, _, _ ->
-
+                },
+                onSelectedGroupClick = { bookId, bookColor, setId, groupNumber ->
+                    navController.navigate("word/$bookId/$bookColor/$setId/$groupNumber")
+                }
+            )
+        }
+        composable(
+            route = "word/{bookId}/{bookColor}/{setId}/{groupNumber}",
+            arguments = listOf(
+                navArgument(name = "bookId") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "bookColor") {
+                    type = NavType.IntType
+                },
+                navArgument(name = "setId") {
+                    type = NavType.StringType
+                },
+                navArgument(name = "groupNumber") {
+                    type = NavType.IntType
+                },
+            )
+        ) {
+            WordScreenRoot(
+                onBackClick = {
+                    navController.navigateUp()
+                },
+                onFinishClick = { _, _, _ ->
+                    // TODO
                 }
             )
         }
