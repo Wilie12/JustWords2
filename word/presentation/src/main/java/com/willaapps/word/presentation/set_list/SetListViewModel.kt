@@ -36,8 +36,4 @@ class SetListViewModel(
             }
             .launchIn(viewModelScope)
     }
-
-    fun onAction(action: SetListAction) {
-
-    }
 }

@@ -32,8 +32,10 @@ fun SetListScreenRoot(
     onBackClick: () -> Unit,
     onSelectedGroupClick: (
         bookId: String,
+        bookColor: Int,
         setId: String,
-        groupNumber: Int) -> Unit,
+        groupNumber: Int
+    ) -> Unit,
     viewModel: SetListViewModel = koinViewModel()
 ) {
     SetListScreen(
@@ -43,6 +45,7 @@ fun SetListScreenRoot(
                 SetListAction.OnBackClick -> onBackClick()
                 is SetListAction.OnGroupClick -> onSelectedGroupClick(
                     viewModel.state.book.bookId,
+                    viewModel.state.book.color,
                     action.selectedSetId,
                     action.selectedGroup
                 )
@@ -89,9 +92,11 @@ fun SetListScreen(
                         set = set,
                         bookColor = Color(state.book.color),
                         onSelectedGroupClick = { setId, groupNumber ->
-                            SetListAction.OnGroupClick(
-                                selectedSetId = setId,
-                                selectedGroup = groupNumber
+                            onAction(
+                                SetListAction.OnGroupClick(
+                                    selectedSetId = setId,
+                                    selectedGroup = groupNumber
+                                )
                             )
                         }
                     )
