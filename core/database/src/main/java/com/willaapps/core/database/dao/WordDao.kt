@@ -17,7 +17,7 @@ interface WordDao {
     fun getSelectedWordGroup(
         bookId: String,
         setId: String,
-        groupNumber: String
+        groupNumber: Int
     ): Flow<List<WordEntity>>
 
     @Query("SELECT * FROM SetEntity WHERE bookId = :bookId")
