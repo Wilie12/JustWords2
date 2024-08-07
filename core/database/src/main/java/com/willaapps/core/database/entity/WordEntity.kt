@@ -11,7 +11,6 @@ data class WordEntity(
     val wordEng: String,
     val setId: String,
     val groupNumber: Int,
-    val bookId: String,
     @PrimaryKey(autoGenerate = false)
     val id: String = ObjectId().toHexString()
 )

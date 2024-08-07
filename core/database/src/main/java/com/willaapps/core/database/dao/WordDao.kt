@@ -11,11 +11,9 @@ import kotlinx.coroutines.flow.Flow
 interface WordDao {
 
     @Query("SELECT * FROM WordEntity " +
-            "WHERE bookId = :bookId " +
-            "AND setId = :setId " +
+            "WHERE setId = :setId " +
             "AND groupNumber = :groupNumber")
     fun getSelectedWordGroup(
-        bookId: String,
         setId: String,
         groupNumber: Int
     ): Flow<List<WordEntity>>

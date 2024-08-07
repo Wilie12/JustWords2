@@ -36,16 +36,8 @@ class RoomLocalWordDataSource(
             }
     }
 
-    override fun getSelectedWordGroup(
-        bookId: String,
-        setId: String,
-        groupNumber: Int
-    ): Flow<List<Word>> {
-        return wordDao.getSelectedWordGroup(
-            bookId,
-            setId,
-            groupNumber
-        )
+    override fun getSelectedWordGroup(setId: String, groupNumber: Int): Flow<List<Word>> {
+        return wordDao.getSelectedWordGroup(setId, groupNumber)
             .map { wordEntities ->
                 wordEntities.map { wordEntity ->
                     wordEntity.toWord()

@@ -28,7 +28,7 @@ fun NavigationRoot(
         wordGraph(navController)
     }
 }
-
+// TODO - animations between screens
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
         startDestination = "intro",
@@ -145,8 +145,10 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
                 onBackClick = {
                     navController.navigateUp()
                 },
-                onFinishClick = { _, _, _ ->
-                    // TODO
+                onFinishClick = { bookId ->
+                    navController.navigate("setList/$bookId") {
+                        popUpTo("start")
+                    }
                 }
             )
         }
