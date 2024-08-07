@@ -7,9 +7,5 @@ interface LocalWordRepository {
     fun getLocalBooks(): Flow<List<Book>>
     fun getLocalBookById(bookId: String): Flow<Book>
     fun getLocalWordSets(bookId: String): Flow<List<WordSet>>
-    fun getSelectedWordGroup(
-        bookId: String,
-        setId: String,
-        groupNumber: Int
-    ): Flow<List<Word>>
+    fun getSelectedWordGroup(setId: String, groupNumber: Int): Flow<List<Word>>
 }

@@ -26,10 +26,10 @@ class WordViewModel(
 
     init {
         state = state.copy(
-            bookColor = checkNotNull(savedStateHandle["bookColor"])
+            bookColor = checkNotNull(savedStateHandle["bookColor"]),
+            bookId = checkNotNull(savedStateHandle["bookId"])
         )
         localWordRepository.getSelectedWordGroup(
-            bookId = checkNotNull(savedStateHandle["bookId"]),
             setId = checkNotNull(savedStateHandle["setId"]),
             groupNumber = checkNotNull(savedStateHandle["groupNumber"]),
         )
@@ -85,7 +85,7 @@ class WordViewModel(
 
                         state.answer.clearText()
                     }
-                    ButtonOption.BUTTON_FINISH -> TODO()
+                    else -> Unit
                 }
             }
             else -> Unit

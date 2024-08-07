@@ -46,11 +46,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun WordScreenRoot(
     onBackClick: () -> Unit,
-    onFinishClick: (
-        perfectGuesses: Int,
-        wordsNumber: Int,
-        bookColor: Int
-    ) -> Unit,
+    onFinishClick: (bookId: String) -> Unit,
     viewModel: WordViewModel = koinViewModel()
 ) {
     WordScreen(
@@ -60,7 +56,7 @@ fun WordScreenRoot(
                 WordAction.OnBackClick -> onBackClick()
                 is WordAction.OnButtonCLick -> {
                     when (action.buttonOption) {
-                        ButtonOption.BUTTON_FINISH -> TODO()
+                        ButtonOption.BUTTON_FINISH -> onFinishClick(viewModel.state.bookId)
                         else -> Unit
                     }
                 }
@@ -148,8 +144,8 @@ fun WordScreen(
 private fun MainWordColumn(state: WordState) {
     Text(
         text = hideWord(
-            sentence = state.sentence,
-            wordEng = state.wordEng,
+            sentence = state.word.sentence,
+            wordEng = state.word.wordEng,
             buttonOption = state.buttonOption
         ),
         fontSize = 16.sp,
@@ -160,8 +156,8 @@ private fun MainWordColumn(state: WordState) {
     Spacer(modifier = Modifier.height(16.dp))
     Text(
         text = when (state.buttonOption) {
-            ButtonOption.BUTTON_CHECK -> state.wordPl
-            ButtonOption.BUTTON_NEXT -> state.wordEng
+            ButtonOption.BUTTON_CHECK -> state.word.wordPl
+            ButtonOption.BUTTON_NEXT -> state.word.wordEng
             else -> ""
         },
         fontSize = 16.sp,
