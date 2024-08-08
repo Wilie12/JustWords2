@@ -23,6 +23,10 @@ class LocalWordRepositoryImpl(
         return localWordDataSource.getWordSets(bookId)
     }
 
+    override fun getLocalSetById(setId: String): Flow<WordSet> {
+        return localWordDataSource.getSetById(setId)
+    }
+
     override fun getSelectedWordGroup(setId: String, groupNumber: Int): Flow<List<Word>> {
         return localWordDataSource.getSelectedWordGroup(setId, groupNumber)
     }

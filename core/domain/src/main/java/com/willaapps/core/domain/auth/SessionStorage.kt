@@ -1,4 +1,4 @@
-package com.willaapps.core.domain
+package com.willaapps.core.domain.auth
 
 interface SessionStorage {
 

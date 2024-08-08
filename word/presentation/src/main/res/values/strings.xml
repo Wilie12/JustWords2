@@ -18,4 +18,5 @@
     <string name="below_average">Below average</string>
     <string name="average">Average</string>
     <string name="above_average">Above average</string>
+    <string name="open_previous_words">Open previous words</string>
 </resources>

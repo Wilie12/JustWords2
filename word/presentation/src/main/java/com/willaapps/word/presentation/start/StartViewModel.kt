@@ -6,11 +6,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.willaapps.core.domain.word.LocalWordRepository
+import com.willaapps.word.domain.PreviousWordStorage
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class StartViewModel(
-    private val localWordRepository: LocalWordRepository
+    private val localWordRepository: LocalWordRepository,
+    private val previousWordStorage: PreviousWordStorage
 ) : ViewModel() {
 
     var state by mutableStateOf(StartState())
@@ -23,6 +25,13 @@ class StartViewModel(
                     books = it
                 )
             }.launchIn(viewModelScope)
+        previousWordStorage.get()
+            .onEach {
+                state = state.copy(
+                    previousWord = it
+                )
+            }
+            .launchIn(viewModelScope)
     }
 
     fun onAction(action: StartAction) {

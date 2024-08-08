@@ -3,7 +3,7 @@ package com.willaapps.core.data.di
 import com.willaapps.core.data.auth.EncryptedSessionStorage
 import com.willaapps.core.data.networking.HttpClientFactory
 import com.willaapps.core.data.word.LocalWordRepositoryImpl
-import com.willaapps.core.domain.SessionStorage
+import com.willaapps.core.domain.auth.SessionStorage
 import com.willaapps.core.domain.word.LocalWordRepository
 import io.ktor.client.HttpClient
 import org.koin.core.module.dsl.singleOf

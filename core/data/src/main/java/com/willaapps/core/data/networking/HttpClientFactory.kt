@@ -1,7 +1,7 @@
 package com.willaapps.core.data.networking
 
-import com.willaapps.core.domain.AuthInfo
-import com.willaapps.core.domain.SessionStorage
+import com.willaapps.core.domain.auth.AuthInfo
+import com.willaapps.core.domain.auth.SessionStorage
 import com.willaapps.core.domain.util.Result
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO

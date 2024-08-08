@@ -28,9 +28,11 @@ import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.ShopIcon
 import com.willaapps.core.presentation.designsystem.UserIcon
 import com.willaapps.core.presentation.designsystem.components.GradientBall
+import com.willaapps.word.domain.PreviousWord
 import com.willaapps.word.presentation.R
 import com.willaapps.word.presentation.start.components.BookItem
 import com.willaapps.word.presentation.start.components.DailyGoalBox
+import com.willaapps.word.presentation.start.components.PreviousBox
 import com.willaapps.word.presentation.start.components.StartToolbar
 import org.koin.androidx.compose.koinViewModel
 
@@ -39,6 +41,12 @@ fun StartScreenRoot(
     onUserClick: () -> Unit,
     onShopClick: () -> Unit,
     onBookClick: (String) -> Unit,
+    onPreviousClick: (
+        bookId: String,
+        bookColor: Int,
+        setId: String,
+        groupNumber: Int
+    ) -> Unit,
     viewModel: StartViewModel = koinViewModel()
 ) {
     StartScreen(
@@ -48,6 +56,12 @@ fun StartScreenRoot(
                 is StartAction.OnBookClick -> onBookClick(action.bookId)
                 StartAction.OnShopClick -> onShopClick()
                 StartAction.OnUserClick -> onUserClick()
+                is StartAction.OnPreviousClick -> onPreviousClick(
+                    action.bookId,
+                    action.bookColor,
+                    action.setId,
+                    action.groupNumber
+                )
             }
         }
     )
@@ -88,6 +102,15 @@ fun StartScreen(
                 dailyGoalCurrent = state.dailyGoalCurrent
             )
             Spacer(modifier = Modifier.height(16.dp))
+            if (state.previousWord != null) {
+                PreviousBox(
+                    previousWord = state.previousWord,
+                    onPreviousWordClick = { bookId, bookColor, setId, groupNumber ->
+                        onAction(StartAction.OnPreviousClick(bookId, bookColor, setId, groupNumber))
+                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -157,6 +180,14 @@ private fun StartScreenPreview() {
                         bookId = "",
                         color = Color(0xFF964EA1).toArgb()
                     )
+                ),
+                previousWord = PreviousWord(
+                    bookId = "1",
+                    bookColor = Color(0xFF64A062).toArgb(),
+                    bookName = "Food & Cooking",
+                    setId = "1",
+                    setName = "Ingredients",
+                    groupNumber = 2
                 )
             ),
             onAction = {}

@@ -2,8 +2,8 @@ package com.willaapps.auth.data
 
 import com.willaapps.auth.domain.AuthRepository
 import com.willaapps.core.data.networking.post
-import com.willaapps.core.domain.AuthInfo
-import com.willaapps.core.domain.SessionStorage
+import com.willaapps.core.domain.auth.AuthInfo
+import com.willaapps.core.domain.auth.SessionStorage
 import com.willaapps.core.domain.util.DataError
 import com.willaapps.core.domain.util.EmptyResult
 import com.willaapps.core.domain.util.Result

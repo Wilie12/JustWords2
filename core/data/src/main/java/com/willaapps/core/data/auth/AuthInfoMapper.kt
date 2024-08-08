@@ -1,6 +1,6 @@
 package com.willaapps.core.data.auth
 
-import com.willaapps.core.domain.AuthInfo
+import com.willaapps.core.domain.auth.AuthInfo
 
 fun AuthInfo.toAuthInfoSerializable(): AuthInfoSerializable {
     return AuthInfoSerializable(
