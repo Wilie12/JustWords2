@@ -6,6 +6,7 @@ import com.willaapps.auth.presentation.di.authViewModelModule
 import com.willaapps.core.data.di.coreDataModule
 import com.willaapps.core.database.di.databaseModule
 import com.willaapps.justwords2.di.appModule
+import com.willaapps.word.data.di.wordDataModule
 import com.willaapps.word.presentation.di.wordPresentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -30,7 +31,8 @@ class JustWords2App: Application() {
                 authViewModelModule,
                 coreDataModule,
                 databaseModule,
-                wordPresentationModule
+                wordPresentationModule,
+                wordDataModule
             )
         }
     }

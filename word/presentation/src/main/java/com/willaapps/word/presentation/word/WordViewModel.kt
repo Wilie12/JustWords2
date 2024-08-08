@@ -12,23 +12,39 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.willaapps.core.domain.word.LocalWordRepository
+import com.willaapps.word.domain.PreviousWord
+import com.willaapps.word.domain.PreviousWordStorage
 import com.willaapps.word.domain.toWordGuessable
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class WordViewModel(
     private val localWordRepository: LocalWordRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val previousWordStorage: PreviousWordStorage
 ) : ViewModel() {
 
     var state by mutableStateOf(WordState())
         private set
 
     init {
-        state = state.copy(
-            bookColor = checkNotNull(savedStateHandle["bookColor"]),
-            bookId = checkNotNull(savedStateHandle["bookId"])
-        )
+        localWordRepository
+            .getLocalBookById(checkNotNull(savedStateHandle["bookId"]))
+            .onEach { book ->
+                state = state.copy(
+                    book = book
+                )
+            }
+            .launchIn(viewModelScope)
+        localWordRepository
+            .getLocalSetById(checkNotNull(savedStateHandle["setId"]))
+            .onEach { wordSet ->
+                state = state.copy(
+                    set = wordSet
+                )
+            }
+            .launchIn(viewModelScope)
         localWordRepository.getSelectedWordGroup(
             setId = checkNotNull(savedStateHandle["setId"]),
             groupNumber = checkNotNull(savedStateHandle["groupNumber"]),
@@ -61,6 +77,7 @@ class WordViewModel(
                             buttonOption = ButtonOption.BUTTON_NEXT
                         )
                     }
+
                     ButtonOption.BUTTON_NEXT -> {
                         if (state.isCorrect) {
                             val newList = state.words.toMutableList()
@@ -78,11 +95,22 @@ class WordViewModel(
                         } else {
                             // TODO - save to history
                             // TODO - save in daily goal
+                            viewModelScope.launch {
+                                previousWordStorage.set(
+                                    PreviousWord(
+                                        bookId = state.book.bookId,
+                                        bookColor = state.book.color,
+                                        bookName = state.book.name,
+                                        setId = state.set.id,
+                                        setName = state.set.name,
+                                        groupNumber = checkNotNull(savedStateHandle["groupNumber"])
+                                    )
+                                )
+                            }
                             state = state.copy(
                                 buttonOption = ButtonOption.BUTTON_FINISH
                             )
                         }
-
                         state.answer.clearText()
                     }
                     else -> Unit

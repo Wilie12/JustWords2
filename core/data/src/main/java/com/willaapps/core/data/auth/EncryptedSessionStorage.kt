@@ -1,8 +1,8 @@
 package com.willaapps.core.data.auth
 
 import android.content.SharedPreferences
-import com.willaapps.core.domain.AuthInfo
-import com.willaapps.core.domain.SessionStorage
+import com.willaapps.core.domain.auth.AuthInfo
+import com.willaapps.core.domain.auth.SessionStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString

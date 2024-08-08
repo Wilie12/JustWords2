@@ -1,5 +1,6 @@
 package com.willaapps.justwords2
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -26,6 +27,7 @@ fun NavigationRoot(
     ) {
         authGraph(navController)
         wordGraph(navController)
+        shopGraph(navController)
     }
 }
 // TODO - animations between screens
@@ -101,9 +103,12 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
         composable("start") {
             StartScreenRoot(
                 onUserClick = { /*TODO*/ },
-                onShopClick = { /*TODO*/ },
+                onShopClick = { navController.navigate("shop") },
                 onBookClick = { bookId ->
                     navController.navigate("setList/$bookId")
+                },
+                onPreviousClick = { bookId, bookColor, setId, groupNumber ->
+                    navController.navigate("words/$bookId/$bookColor/$setId/$groupNumber")
                 }
             )
         }
@@ -120,12 +125,12 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
                     navController.navigateUp()
                 },
                 onSelectedGroupClick = { bookId, bookColor, setId, groupNumber ->
-                    navController.navigate("word/$bookId/$bookColor/$setId/$groupNumber")
+                    navController.navigate("words/$bookId/$bookColor/$setId/$groupNumber")
                 }
             )
         }
         composable(
-            route = "word/{bookId}/{bookColor}/{setId}/{groupNumber}",
+            route = "words/{bookId}/{bookColor}/{setId}/{groupNumber}",
             arguments = listOf(
                 navArgument(name = "bookId") {
                     type = NavType.StringType
@@ -151,6 +156,18 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
                     }
                 }
             )
+        }
+    }
+}
+
+// TODO - shop module
+private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
+    navigation(
+        startDestination = "shopBooks",
+        route = "shop"
+    ) {
+        composable("shopBooks") {
+            Text(text = "ShopBooks")
         }
     }
 }

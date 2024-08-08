@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.components.ActionButton
 import com.willaapps.core.presentation.designsystem.components.GradientBall
@@ -56,7 +57,7 @@ fun WordScreenRoot(
                 WordAction.OnBackClick -> onBackClick()
                 is WordAction.OnButtonCLick -> {
                     when (action.buttonOption) {
-                        ButtonOption.BUTTON_FINISH -> onFinishClick(viewModel.state.bookId)
+                        ButtonOption.BUTTON_FINISH -> onFinishClick(viewModel.state.book.bookId)
                         else -> Unit
                     }
                 }
@@ -77,7 +78,7 @@ fun WordScreen(
             .background(MaterialTheme.colorScheme.background)
     ) {
         GradientBall(
-            gradientColor = Color(state.bookColor),
+            gradientColor = Color(state.book.color),
             offsetY = 200f
         )
             Column(
@@ -307,7 +308,11 @@ private fun WordScreenPreview() {
                         wordEng = "employee"
                     )
                 ),
-                bookColor = Color(0xFFD2614F).toArgb(),
+                book = Book(
+                    name = "",
+                    color = Color(0xFFD2614F).toArgb(),
+                    bookId = ""
+                ),
                 buttonOption = ButtonOption.BUTTON_CHECK
             ),
             onAction = {}
