@@ -2,10 +2,11 @@ package com.willaapps.justwords2
 
 import android.app.Application
 import com.willaapps.auth.data.di.authDataModule
-import com.willaapps.auth.presentation.di.authViewModelModule
+import com.willaapps.auth.presentation.di.authPresentationModule
 import com.willaapps.core.data.di.coreDataModule
 import com.willaapps.core.database.di.databaseModule
 import com.willaapps.justwords2.di.appModule
+import com.willaapps.shop.presentation.di.shopPresentationModule
 import com.willaapps.word.data.di.wordDataModule
 import com.willaapps.word.presentation.di.wordPresentationModule
 import org.koin.android.ext.koin.androidContext
@@ -28,11 +29,12 @@ class JustWords2App: Application() {
             modules(
                 appModule,
                 authDataModule,
-                authViewModelModule,
+                authPresentationModule,
                 coreDataModule,
                 databaseModule,
                 wordPresentationModule,
-                wordDataModule
+                wordDataModule,
+                shopPresentationModule
             )
         }
     }

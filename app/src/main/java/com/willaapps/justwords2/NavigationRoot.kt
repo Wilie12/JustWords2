@@ -1,6 +1,5 @@
 package com.willaapps.justwords2
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -12,6 +11,7 @@ import androidx.navigation.navigation
 import com.willaapps.auth.presentation.intro.IntroScreenRoot
 import com.willaapps.auth.presentation.login.LoginScreenRoot
 import com.willaapps.auth.presentation.register.RegisterScreenRoot
+import com.willaapps.shop.presentation.shop.ShopScreenRoot
 import com.willaapps.word.presentation.set_list.SetListScreenRoot
 import com.willaapps.word.presentation.start.StartScreenRoot
 import com.willaapps.word.presentation.word.WordScreenRoot
@@ -168,7 +168,12 @@ private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
         route = "shop"
     ) {
         composable("shopBooks") {
-            Text(text = "ShopBooks")
+            ShopScreenRoot(
+                onBackClick = { navController.navigateUp() },
+                onShopBookClick = {
+                    // TODO
+                }
+            )
         }
     }
 }
