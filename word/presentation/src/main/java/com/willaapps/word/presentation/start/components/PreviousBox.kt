@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,12 +74,14 @@ fun PreviousBox(
                 Text(
                     text = previousWord.bookName,
                     fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
                     color = Color(0xFFD7D9CE)
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "${previousWord.setName} - Group ${previousWord.groupNumber}",
                     fontSize = 16.sp,
+                    fontWeight = FontWeight.Medium,
                     color = Color(0xFFBDBFB5)
                 )
             }

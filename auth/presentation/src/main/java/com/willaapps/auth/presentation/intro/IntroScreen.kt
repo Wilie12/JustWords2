@@ -1,5 +1,11 @@
 package com.willaapps.auth.presentation.intro
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -51,6 +58,31 @@ fun IntroScreenRoot(
 fun IntroScreen(
     onAction: (IntroAction) -> Unit
 ) {
+    val infiniteTransition = rememberInfiniteTransition()
+    val animated by infiniteTransition.animateFloat(
+        initialValue = -140f,
+        targetValue = -300f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 30000,
+                easing = LinearEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        ), label = "1"
+    )
+    val reverseAnimated by infiniteTransition.animateFloat(
+        initialValue = -300f,
+        targetValue = -140f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 30000,
+                easing = LinearEasing
+            ),
+            repeatMode = RepeatMode.Reverse
+        ), label = "2"
+    )
+
+
     val backgroundTexts = listOf(
         stringResource(id = R.string.bg_text_1),
         stringResource(id = R.string.bg_text_2),
@@ -82,7 +114,6 @@ fun IntroScreen(
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    // TODO - rotated moving words
                     Box(
                         modifier = Modifier
                             .alpha(0.15f)
@@ -95,7 +126,14 @@ fun IntroScreen(
                                 BackgroundText(
                                     text = text,
                                     modifier = Modifier
-                                        .offset(x = (-140).dp, ((50 * index) - 100).dp)
+                                        .offset(
+                                            x = if (index % 2 == 0) {
+                                                (animated).dp
+                                            } else {
+                                                (reverseAnimated).dp
+                                            },
+                                            y = ((50 * index) - 100).dp
+                                        )
 
                                 )
                                 index++
