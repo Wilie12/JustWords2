@@ -31,6 +31,7 @@ fun NavigationRoot(
     }
 }
 // TODO - animations between screens
+// TODO - check auth 401 response - Login
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
         startDestination = "intro",
