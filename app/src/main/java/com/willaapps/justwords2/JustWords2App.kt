@@ -6,6 +6,7 @@ import com.willaapps.auth.presentation.di.authPresentationModule
 import com.willaapps.core.data.di.coreDataModule
 import com.willaapps.core.database.di.databaseModule
 import com.willaapps.justwords2.di.appModule
+import com.willaapps.shop.data.di.shopDataModule
 import com.willaapps.shop.presentation.di.shopPresentationModule
 import com.willaapps.word.data.di.wordDataModule
 import com.willaapps.word.presentation.di.wordPresentationModule
@@ -34,7 +35,8 @@ class JustWords2App: Application() {
                 databaseModule,
                 wordPresentationModule,
                 wordDataModule,
-                shopPresentationModule
+                shopPresentationModule,
+                shopDataModule
             )
         }
     }
