@@ -75,7 +75,7 @@ fun ShopBookItem(
                     .fillMaxWidth()
                     .basicMarquee(
                         spacing = MarqueeSpacing(0.dp),
-                        delayMillis = 3000
+                        delayMillis = 1000
                     )
             )
         }

@@ -1,5 +1,6 @@
 package com.willaapps.shop.presentation.shop
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +29,7 @@ import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.components.GradientBall
 import com.willaapps.core.presentation.designsystem.components.JwToolbar
+import com.willaapps.core.presentation.ui.ObserveAsEvents
 import com.willaapps.shop.domain.ShopBook
 import com.willaapps.shop.presentation.R
 import org.koin.androidx.compose.koinViewModel
@@ -37,6 +40,20 @@ fun ShopScreenRoot(
     onShopBookClick: (bookId: String) -> Unit,
     viewModel: ShopViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
+
+    ObserveAsEvents(flow = viewModel.events) { event ->
+        when (event) {
+            is ShopEvent.Error -> {
+                Toast.makeText(
+                    context,
+                    event.error.asString(context),
+                    Toast.LENGTH_LONG
+                ).show()
+                onBackClick()
+            }
+        }
+    }
     ShopScreen(
         state = viewModel.state,
         onAction = { action ->

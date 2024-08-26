@@ -1,10 +1,18 @@
 package com.willaapps.core.presentation.designsystem.components
 
 import android.os.Build
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.geometry.Offset
@@ -43,6 +51,22 @@ fun GradientBall(
 
     val isAtLeastAndroid12 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
+    var animationPlayed by remember {
+        mutableStateOf(false)
+    }
+
+    val animatedColor by animateColorAsState(
+        targetValue = if (animationPlayed) gradientColor else Color.Black,
+        animationSpec = tween(
+            durationMillis = 800,
+            easing = LinearEasing
+        )
+    )
+
+    LaunchedEffect(key1 = true) {
+        animationPlayed = true
+    }
+
     Box(modifier = modifier
         .fillMaxSize()
         .then(
@@ -53,7 +77,7 @@ fun GradientBall(
         .background(
             brush = Brush.radialGradient(
                 colors = listOf(
-                    if (isAtLeastAndroid12) gradientColor else gradientColor.copy(alpha = 0.3f),
+                    if (isAtLeastAndroid12) animatedColor else animatedColor.copy(alpha = 0.3f),
                     Color.Transparent
                 ),
                 center = Offset(
