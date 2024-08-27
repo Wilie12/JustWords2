@@ -29,7 +29,7 @@ class RoomLocalWordDataSource(
             }
     }
 
-    override fun getWordSets(bookId: String): Flow<List<WordSet>> {
+    override fun getWordSetsById(bookId: String): Flow<List<WordSet>> {
         return wordDao.getSetList(bookId)
             .map { setEntity ->
                 setEntity.map { it.toWordSet() }
