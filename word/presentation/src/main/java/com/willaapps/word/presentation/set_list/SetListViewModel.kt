@@ -28,7 +28,7 @@ class SetListViewModel(
             }
             .launchIn(viewModelScope)
         localWordRepository
-            .getLocalWordSets(checkNotNull(savedStateHandle["bookId"]))
+            .getLocalWordSetsById(checkNotNull(savedStateHandle["bookId"]))
             .onEach { sets ->
                 state = state.copy(
                     sets = sets

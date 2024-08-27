@@ -6,7 +6,7 @@ interface LocalWordDataSource {
 
     fun getBooks(): Flow<List<Book>>
     fun getBookById(bookId: String): Flow<Book>
-    fun getWordSets(bookId: String): Flow<List<WordSet>>
+    fun getWordSetsById(bookId: String): Flow<List<WordSet>>
     fun getSetById(setId: String): Flow<WordSet>
     fun getSelectedWordGroup(setId: String, groupNumber: Int): Flow<List<Word>>
 }
