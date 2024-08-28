@@ -8,4 +8,5 @@ import com.willaapps.core.domain.word.WordSet
 interface RemoteShopDataSource {
     suspend fun getBooks(): Result<List<Book>, DataError.Network>
     suspend fun getWordSets(): Result<List<WordSet>, DataError.Network>
+    suspend fun getWordSetsById(bookId: String): Result<List<WordSet>, DataError.Network>
 }

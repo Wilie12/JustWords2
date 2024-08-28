@@ -51,7 +51,6 @@ fun ShopScreenRoot(
                     event.error.asString(context),
                     Toast.LENGTH_LONG
                 ).show()
-                onBackClick()
             }
         }
     }
@@ -73,6 +72,7 @@ private fun ShopScreen(
     state: ShopState,
     onAction: (ShopAction) -> Unit
 ) {
+    // TODO - display error identification if f.e. no internet
     Box(
         modifier = Modifier
             .fillMaxSize()

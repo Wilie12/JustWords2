@@ -31,8 +31,11 @@ import com.willaapps.shop.domain.ShopWordSet
 fun ShopWordSetItem(
     shopWordSet: ShopWordSet,
     onShopWordSetClick: (setId: String) -> Unit,
+    bookColor: Int,
     modifier: Modifier = Modifier
 ) {
+    // TODO - add loading when downloading
+    // TODO - disable clickable when downloaded
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -90,7 +93,7 @@ fun ShopWordSetItem(
                     color = if (shopWordSet.isDownloaded) {
                         Color(0xFF121211).copy(0.7f)
                     } else {
-                        Color(shopWordSet.bookColor)
+                        Color(bookColor)
                     }
                 )
                 .clickable {
@@ -109,11 +112,11 @@ private fun ShopWordSetItemPreview() {
             shopWordSet = ShopWordSet(
                 name = "General vocabulary",
                 bookId = "1",
-                bookColor = Color(0xFFD2614F).toArgb(),
                 numberOfGroups = 4,
                 id = "1",
                 isDownloaded = false
             ),
+            bookColor = Color(0xFFD2614F).toArgb(),
             onShopWordSetClick = {}
         )
     }
