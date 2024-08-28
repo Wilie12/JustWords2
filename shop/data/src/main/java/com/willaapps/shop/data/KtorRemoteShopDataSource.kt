@@ -27,4 +27,15 @@ class KtorRemoteShopDataSource(
             wordSetResponse.sets.map { it.toWordSet() }
         }
     }
+
+    override suspend fun getWordSetsById(bookId: String): Result<List<WordSet>, DataError.Network> {
+        return httpClient.get<WordSetResponse>(
+            route = "/setsById",
+            queryParameters = mapOf(
+                "bookId" to bookId
+            )
+        ).map { wordSetResponse ->
+            wordSetResponse.sets.map { it.toWordSet() }
+        }
+    }
 }
