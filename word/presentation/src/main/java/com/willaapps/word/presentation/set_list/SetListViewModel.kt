@@ -6,12 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.willaapps.core.domain.word.LocalWordRepository
+import com.willaapps.core.domain.word.LocalWordDataSource
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class SetListViewModel(
-    private val localWordRepository: LocalWordRepository,
+    private val localWordDataSource: LocalWordDataSource,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -19,16 +19,16 @@ class SetListViewModel(
         private set
 
     init {
-        localWordRepository
-            .getLocalBookById(checkNotNull(savedStateHandle["bookId"]))
+        localWordDataSource
+            .getBookById(checkNotNull(savedStateHandle["bookId"]))
             .onEach { book ->
                 state = state.copy(
                     book = book
                 )
             }
             .launchIn(viewModelScope)
-        localWordRepository
-            .getLocalWordSetsById(checkNotNull(savedStateHandle["bookId"]))
+        localWordDataSource
+            .getWordSetsById(checkNotNull(savedStateHandle["bookId"]))
             .onEach { sets ->
                 state = state.copy(
                     sets = sets

@@ -19,14 +19,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.components.GradientBall
@@ -53,10 +57,7 @@ fun ShopSetScreenRoot(
                     event.error.asString(context),
                     Toast.LENGTH_LONG
                 ).show()
-                // TODO - replace onBackClick with notification about error
-                onBackClick()
             }
-
             ShopSetEvent.SuccessfullyDownloaded -> {
                 Toast.makeText(
                     context,
@@ -83,21 +84,28 @@ private fun ShopSetScreen(
     state: ShopSetState,
     onAction: (ShopSetAction) -> Unit
 ) {
-    // TODO - display error identification if f.e. no internet
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
         GradientBall(
-            gradientColor = Color(state.book.color),
+            gradientColor = if (state.error == null) {
+                Color(state.book.color)
+            } else {
+                Color(0xFF119DA4)
+            },
             offsetY = 200f
         )
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
             JwToolbar(
-                text = state.book.name,
+                text = if (state.error == null) {
+                    state.book.name
+                } else {
+                    stringResource(R.string.word_set)
+                },
                 onBackClick = {
                     onAction(ShopSetAction.OnBackClick)
                 },
@@ -106,7 +114,30 @@ private fun ShopSetScreen(
                     .systemBarsPadding()
             )
             Spacer(modifier = Modifier.height(16.dp))
-            if (!state.isLoading) {
+            if (state.error != null) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.5f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.sad),
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFFD7D9CE),
+                        fontSize = 32.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = stringResource(R.string.oops_something_went_wrong),
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFFD7D9CE),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+            if (!state.isLoading && state.error == null) {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
@@ -127,7 +158,8 @@ private fun ShopSetScreen(
                         )
                     }
                 }
-            } else {
+            }
+            if (state.isLoading) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier

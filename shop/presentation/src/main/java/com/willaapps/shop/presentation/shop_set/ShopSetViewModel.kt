@@ -68,7 +68,6 @@ class ShopSetViewModel(
         }
     }
 
-    // TODO - check for local book if no internet
     private suspend fun getBookById(bookId: String) {
         state = state.copy(
             isLoading = true
@@ -76,8 +75,10 @@ class ShopSetViewModel(
         when (val result = shopRepository.getBookById(bookId)) {
             is Result.Error -> {
                 eventChannel.send(ShopSetEvent.Error(result.error.asUiText()))
+                state = state.copy(
+                    error = result.error
+                )
             }
-
             is Result.Success -> {
                 state = state.copy(
                     book = result.data
