@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,8 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.components.GradientBall
@@ -72,7 +75,6 @@ private fun ShopScreen(
     state: ShopState,
     onAction: (ShopAction) -> Unit
 ) {
-    // TODO - display error identification if f.e. no internet
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -95,7 +97,31 @@ private fun ShopScreen(
                     .systemBarsPadding()
             )
             Spacer(modifier = Modifier.height(16.dp))
-            if (!state.isLoading) {
+            if (state.error != null) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.5f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(R.string.sad),
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFFD7D9CE),
+                        fontSize = 32.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = stringResource(R.string.oops_something_went_wrong),
+                        fontWeight = FontWeight.Medium,
+                        color = Color(0xFFD7D9CE),
+                        fontSize = 16.sp
+                    )
+                }
+            }
+            if (!state.isLoading && state.error == null) {
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     modifier = Modifier
@@ -111,7 +137,8 @@ private fun ShopScreen(
                         )
                     }
                 }
-            } else {
+            }
+            if (state.isLoading) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier

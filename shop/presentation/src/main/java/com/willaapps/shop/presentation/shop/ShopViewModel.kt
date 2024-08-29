@@ -34,6 +34,9 @@ class ShopViewModel(
         when (val result = shopRepository.getShopBooks()) {
             is Result.Error -> {
                 eventChannel.send(ShopEvent.Error(result.error.asUiText()))
+                state = state.copy(
+                    error = result.error
+                )
             }
             is Result.Success -> {
                 state = state.copy(

@@ -139,7 +139,8 @@ fun StartScreen(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.clip(RoundedCornerShape(100f))
                 ) {
                     items(
                         items = state.books,

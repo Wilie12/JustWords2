@@ -11,7 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.willaapps.core.domain.word.LocalWordRepository
+import com.willaapps.core.domain.word.LocalWordDataSource
 import com.willaapps.word.domain.PreviousWord
 import com.willaapps.word.domain.PreviousWordStorage
 import com.willaapps.word.domain.toWordGuessable
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class WordViewModel(
-    private val localWordRepository: LocalWordRepository,
+    private val localWordDataSource: LocalWordDataSource,
     private val savedStateHandle: SavedStateHandle,
     private val previousWordStorage: PreviousWordStorage
 ) : ViewModel() {
@@ -29,23 +29,23 @@ class WordViewModel(
         private set
 
     init {
-        localWordRepository
-            .getLocalBookById(checkNotNull(savedStateHandle["bookId"]))
+        localWordDataSource
+            .getBookById(checkNotNull(savedStateHandle["bookId"]))
             .onEach { book ->
                 state = state.copy(
                     book = book
                 )
             }
             .launchIn(viewModelScope)
-        localWordRepository
-            .getLocalSetById(checkNotNull(savedStateHandle["setId"]))
+        localWordDataSource
+            .getSetById(checkNotNull(savedStateHandle["setId"]))
             .onEach { wordSet ->
                 state = state.copy(
                     set = wordSet
                 )
             }
             .launchIn(viewModelScope)
-        localWordRepository.getSelectedWordGroup(
+        localWordDataSource.getSelectedWordGroup(
             setId = checkNotNull(savedStateHandle["setId"]),
             groupNumber = checkNotNull(savedStateHandle["groupNumber"]),
         )

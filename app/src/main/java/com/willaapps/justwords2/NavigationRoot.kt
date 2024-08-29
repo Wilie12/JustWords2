@@ -162,7 +162,6 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
     }
 }
 
-// TODO - shop module
 private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
     navigation(
         startDestination = "shopBooks",
