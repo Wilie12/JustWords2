@@ -1,6 +1,8 @@
 package com.willaapps.core.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.willaapps.core.database.entity.BookEntity
 import com.willaapps.core.database.entity.SetEntity
@@ -29,4 +31,13 @@ interface WordDao {
 
     @Query("SELECT * FROM SetEntity WHERE id=:setId")
     fun getSetById(setId: String): Flow<SetEntity>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertWords(words: List<WordEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertSet(setEntity: SetEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertBook(bookEntity: BookEntity)
 }

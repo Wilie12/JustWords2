@@ -1,4 +1,4 @@
-package com.willaapps.shop.domain
+package com.willaapps.shop.domain.model
 
 data class ShopWordSet(
     val name: String,

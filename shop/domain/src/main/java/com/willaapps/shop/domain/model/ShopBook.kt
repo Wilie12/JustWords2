@@ -1,4 +1,4 @@
-package com.willaapps.shop.domain
+package com.willaapps.shop.domain.model
 
 import com.willaapps.core.domain.word.Book
 

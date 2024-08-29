@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -136,15 +138,21 @@ fun StartScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                state.books.forEach { book ->
-                    BookItem(
-                        book = book,
-                        onBookClick = {
-                            onAction(StartAction.OnBookClick(bookId = book.bookId))
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(
+                        items = state.books,
+                        key = { it.bookId }
+                    ) { book ->
+                        BookItem(
+                            book = book,
+                            onBookClick = {
+                                onAction(StartAction.OnBookClick(bookId = book.bookId))
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
                 }
             }
         }
