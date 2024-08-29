@@ -1,14 +1,19 @@
 package com.willaapps.shop.data
 
 import com.willaapps.core.domain.util.DataError
+import com.willaapps.core.domain.util.EmptyResult
 import com.willaapps.core.domain.util.Result
+import com.willaapps.core.domain.util.asEmptyDataResult
 import com.willaapps.core.domain.word.Book
 import com.willaapps.core.domain.word.LocalWordDataSource
 import com.willaapps.core.domain.word.WordSet
+import com.willaapps.shop.data.mappers.toShopWordSet
 import com.willaapps.shop.domain.RemoteShopDataSource
-import com.willaapps.shop.domain.ShopBook
+import com.willaapps.shop.domain.model.ShopBook
 import com.willaapps.shop.domain.ShopRepository
-import com.willaapps.shop.domain.ShopWordSet
+import com.willaapps.shop.domain.model.ShopWordSet
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
@@ -16,7 +21,8 @@ import kotlinx.coroutines.flow.map
 
 class ShopRepositoryImpl(
     private val remoteShopDataSource: RemoteShopDataSource,
-    private val localWordDataSource: LocalWordDataSource
+    private val localWordDataSource: LocalWordDataSource,
+    private val applicationScope: CoroutineScope
 ) : ShopRepository {
     override suspend fun getShopBooks(): Result<List<ShopBook>, DataError.Network> {
         var books: List<Book> = emptyList()
@@ -77,6 +83,25 @@ class ShopRepositoryImpl(
                 }
                 localListMutable.toList()
             }
+    }
+
+    override suspend fun fetchWords(book: Book, wordSet: WordSet): EmptyResult<DataError> {
+        return when (val result = remoteShopDataSource.getWordsById(wordSet.id)) {
+            is Result.Error -> {
+                result.asEmptyDataResult()
+            }
+            is Result.Success -> {
+                applicationScope.async {
+                    localWordDataSource.insertWords(result.data).asEmptyDataResult()
+                }.await()
+                applicationScope.async {
+                    localWordDataSource.insertWordSet(wordSet).asEmptyDataResult()
+                }.await()
+                applicationScope.async {
+                    localWordDataSource.insertBook(book).asEmptyDataResult()
+                }.await()
+            }
+        }
     }
 
     private fun getRemoteWordSetsFlow(bookId: String) = flow<List<ShopWordSet>> {

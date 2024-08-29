@@ -1,6 +1,9 @@
-package com.willaapps.core.domain.word
+package com.willaapps.shop.data.dto
 
-data class Word(
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class WordDto(
     val sentence: String,
     val wordPl: String,
     val wordEng: String,

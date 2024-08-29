@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.willaapps.core.domain.util.Result
 import com.willaapps.core.presentation.ui.asUiText
 import com.willaapps.shop.domain.ShopRepository
+import com.willaapps.shop.domain.mappers.toWordSet
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -43,7 +44,25 @@ class ShopSetViewModel(
     fun onAction(action: ShopSetAction) {
         when (action) {
             is ShopSetAction.OnAddWordSetClick -> {
-                // TODO - download wordSet from server and save locally
+                viewModelScope.launch {
+                    state = state.copy(isDownloading = true)
+                    val result = shopRepository.fetchWords(
+                        book = state.book,
+                        wordSet = state.shopWordSets
+                            .first { shopWordSet -> shopWordSet.id == action.setId }
+                            .toWordSet()
+                    )
+                    state = state.copy(isDownloading = false)
+
+                    when (result) {
+                        is Result.Error -> {
+                            eventChannel.send(ShopSetEvent.Error(result.error.asUiText()))
+                        }
+                        is Result.Success -> {
+                            eventChannel.send(ShopSetEvent.SuccessfullyDownloaded)
+                        }
+                    }
+                }
             }
             else -> Unit
         }

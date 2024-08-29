@@ -2,4 +2,5 @@
 <resources>
     <string name="shop">Shop</string>
     <string name="successfully_downloaded_a_new_set">Successfully downloaded a new set</string>
+    <string name="downloading">Downloading…</string>
 </resources>

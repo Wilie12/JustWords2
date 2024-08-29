@@ -32,8 +32,9 @@ import com.willaapps.core.presentation.designsystem.JustWords2Theme
 import com.willaapps.core.presentation.designsystem.components.GradientBall
 import com.willaapps.core.presentation.designsystem.components.JwToolbar
 import com.willaapps.core.presentation.ui.ObserveAsEvents
-import com.willaapps.shop.domain.ShopWordSet
+import com.willaapps.shop.domain.model.ShopWordSet
 import com.willaapps.shop.presentation.R
+import com.willaapps.shop.presentation.shop_set.components.DownloadingDialog
 import com.willaapps.shop.presentation.shop_set.components.ShopWordSetItem
 import org.koin.androidx.compose.koinViewModel
 
@@ -52,6 +53,7 @@ fun ShopSetScreenRoot(
                     event.error.asString(context),
                     Toast.LENGTH_LONG
                 ).show()
+                // TODO - replace onBackClick with notification about error
                 onBackClick()
             }
 
@@ -81,6 +83,7 @@ private fun ShopSetScreen(
     state: ShopSetState,
     onAction: (ShopSetAction) -> Unit
 ) {
+    // TODO - display error identification if f.e. no internet
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -137,6 +140,10 @@ private fun ShopSetScreen(
                 }
             }
         }
+    }
+
+    if (state.isDownloading) {
+        DownloadingDialog()
     }
 }
 

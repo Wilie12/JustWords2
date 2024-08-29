@@ -51,9 +51,11 @@ class WordViewModel(
         )
             .onEach { words ->
                 state = state.copy(
-                    words = words.map { word ->
-                        word.toWordGuessable()
-                    },
+                    words = words
+                        .shuffled()
+                        .map { word ->
+                            word.toWordGuessable()
+                        },
                     wordsNumber = words.size
                 )
             }
@@ -113,9 +115,11 @@ class WordViewModel(
                         }
                         state.answer.clearText()
                     }
+
                     else -> Unit
                 }
             }
+
             else -> Unit
         }
     }

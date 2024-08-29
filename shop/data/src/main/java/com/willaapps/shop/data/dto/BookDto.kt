@@ -1,4 +1,4 @@
-package com.willaapps.shop.data
+package com.willaapps.shop.data.dto
 
 import kotlinx.serialization.Serializable
 

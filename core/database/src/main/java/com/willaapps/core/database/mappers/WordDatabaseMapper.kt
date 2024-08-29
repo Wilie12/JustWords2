@@ -15,8 +15,25 @@ fun BookEntity.toBook(): Book {
     )
 }
 
+fun Book.toBookEntity(): BookEntity {
+    return BookEntity(
+        name = name,
+        id = bookId,
+        color = color
+    )
+}
+
 fun SetEntity.toWordSet(): WordSet {
     return WordSet(
+        name = name,
+        bookId = bookId,
+        numberOfGroups = numberOfGroups,
+        id = id
+    )
+}
+
+fun WordSet.toSetEntity(): SetEntity {
+    return SetEntity(
         name = name,
         bookId = bookId,
         numberOfGroups = numberOfGroups,
@@ -28,6 +45,20 @@ fun WordEntity.toWord(): Word {
     return Word(
         sentence = sentence,
         wordPl = wordPl,
-        wordEng = wordEng
+        wordEng = wordEng,
+        setId = setId,
+        groupNumber = groupNumber,
+        id = id
+    )
+}
+
+fun Word.toWordEntity(): WordEntity {
+    return WordEntity(
+        sentence = sentence,
+        wordPl = wordPl,
+        wordEng = wordEng,
+        setId = setId,
+        groupNumber = groupNumber,
+        id = id
     )
 }

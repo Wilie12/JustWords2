@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.willaapps.core.domain.word.Book
 import com.willaapps.core.presentation.designsystem.ForwardIcon
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
-import com.willaapps.shop.domain.ShopBook
+import com.willaapps.shop.domain.model.ShopBook
 
 @Composable
 fun ShopBookItem(

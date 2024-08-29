@@ -10,12 +10,16 @@ import com.willaapps.shop.data.di.shopDataModule
 import com.willaapps.shop.presentation.di.shopPresentationModule
 import com.willaapps.word.data.di.wordDataModule
 import com.willaapps.word.presentation.di.wordPresentationModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
 class JustWords2App: Application() {
+
+    val applicationScope = CoroutineScope(SupervisorJob())
 
     override fun onCreate() {
         super.onCreate()

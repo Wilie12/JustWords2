@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.willaapps.core.presentation.designsystem.AddIcon
 import com.willaapps.core.presentation.designsystem.CheckIcon
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
-import com.willaapps.shop.domain.ShopWordSet
+import com.willaapps.shop.domain.model.ShopWordSet
 
 @Composable
 fun ShopWordSetItem(
@@ -34,8 +34,6 @@ fun ShopWordSetItem(
     bookColor: Int,
     modifier: Modifier = Modifier
 ) {
-    // TODO - add loading when downloading
-    // TODO - disable clickable when downloaded
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -96,9 +94,15 @@ fun ShopWordSetItem(
                         Color(bookColor)
                     }
                 )
-                .clickable {
-                    onShopWordSetClick(shopWordSet.id)
-                }
+                .then(
+                    if (shopWordSet.isDownloaded) {
+                        Modifier
+                    } else {
+                        Modifier.clickable {
+                            onShopWordSetClick(shopWordSet.id)
+                        }
+                    }
+                )
                 .padding(10.dp)
         )
     }
