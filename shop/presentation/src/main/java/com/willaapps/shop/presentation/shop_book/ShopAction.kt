@@ -1,4 +1,4 @@
-package com.willaapps.shop.presentation.shop
+package com.willaapps.shop.presentation.shop_book
 
 sealed interface ShopAction {
     data object OnBackClick: ShopAction

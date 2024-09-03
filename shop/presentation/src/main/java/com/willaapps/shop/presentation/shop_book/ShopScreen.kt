@@ -1,4 +1,4 @@
-package com.willaapps.shop.presentation.shop
+package com.willaapps.shop.presentation.shop_book
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -35,7 +35,7 @@ import com.willaapps.core.presentation.designsystem.components.JwToolbar
 import com.willaapps.core.presentation.ui.ObserveAsEvents
 import com.willaapps.shop.domain.model.ShopBook
 import com.willaapps.shop.presentation.R
-import com.willaapps.shop.presentation.shop.components.ShopBookItem
+import com.willaapps.shop.presentation.shop_book.components.ShopBookItem
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

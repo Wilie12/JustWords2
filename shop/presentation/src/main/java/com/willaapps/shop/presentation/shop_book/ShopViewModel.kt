@@ -1,4 +1,4 @@
-package com.willaapps.shop.presentation.shop
+package com.willaapps.shop.presentation.shop_book
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
