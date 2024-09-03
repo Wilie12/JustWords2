@@ -1,4 +1,4 @@
-package com.willaapps.shop.presentation.shop
+package com.willaapps.shop.presentation.shop_book
 
 import com.willaapps.core.domain.util.Error
 import com.willaapps.shop.domain.model.ShopBook

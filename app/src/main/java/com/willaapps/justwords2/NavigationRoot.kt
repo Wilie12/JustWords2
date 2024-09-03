@@ -11,8 +11,9 @@ import androidx.navigation.navigation
 import com.willaapps.auth.presentation.intro.IntroScreenRoot
 import com.willaapps.auth.presentation.login.LoginScreenRoot
 import com.willaapps.auth.presentation.register.RegisterScreenRoot
-import com.willaapps.shop.presentation.shop.ShopScreenRoot
+import com.willaapps.shop.presentation.shop_book.ShopScreenRoot
 import com.willaapps.shop.presentation.shop_set.ShopSetScreenRoot
+import com.willaapps.user.presentation.profile.ProfileScreenRoot
 import com.willaapps.word.presentation.set_list.SetListScreenRoot
 import com.willaapps.word.presentation.start.StartScreenRoot
 import com.willaapps.word.presentation.word.WordScreenRoot
@@ -29,6 +30,7 @@ fun NavigationRoot(
         authGraph(navController)
         wordGraph(navController)
         shopGraph(navController)
+        userGraph(navController)
     }
 }
 // TODO - animations between screens
@@ -104,7 +106,7 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
     ) {
         composable("start") {
             StartScreenRoot(
-                onUserClick = { /*TODO*/ },
+                onUserClick = { navController.navigate("user") },
                 onShopClick = { navController.navigate("shop") },
                 onBookClick = { bookId ->
                     navController.navigate("setList/$bookId")
@@ -186,6 +188,20 @@ private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
             ShopSetScreenRoot(
                 onBackClick = { navController.navigateUp() }
             )
+        }
+    }
+}
+
+private fun NavGraphBuilder.userGraph(navController: NavHostController) {
+    navigation(
+        startDestination = "profile",
+        route = "user"
+    ) {
+        composable("profile") {
+            ProfileScreenRoot(
+                onBackClick = { navController.navigateUp() },
+                onEditProfileClick = { /*TODO*/ },
+                onLogoutClick = { /*TODO*/ })
         }
     }
 }

@@ -37,3 +37,12 @@ val ForwardIcon: ImageVector
 val AddIcon: ImageVector
     @Composable
     get() = ImageVector.vectorResource(id = R.drawable.add)
+val StreakIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.streak)
+val TrophyIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.trophy)
+val LevelIcon: ImageVector
+    @Composable
+    get() = ImageVector.vectorResource(id = R.drawable.level)

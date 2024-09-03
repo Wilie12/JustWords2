@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile">Profile</string>
+    <string name="games_played">%d games played</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="logout">Logout</string>
+    <string name="summary">Summary</string>
+    <string name="daily_streak">Daily streak</string>
+    <string name="best_streak">Best streak</string>
+    <string name="level">Level</string>
+</resources>

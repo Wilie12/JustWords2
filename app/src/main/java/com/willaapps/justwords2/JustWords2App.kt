@@ -8,6 +8,7 @@ import com.willaapps.core.database.di.databaseModule
 import com.willaapps.justwords2.di.appModule
 import com.willaapps.shop.data.di.shopDataModule
 import com.willaapps.shop.presentation.di.shopPresentationModule
+import com.willaapps.user.presentation.di.userPresentationModule
 import com.willaapps.word.data.di.wordDataModule
 import com.willaapps.word.presentation.di.wordPresentationModule
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +41,8 @@ class JustWords2App: Application() {
                 wordPresentationModule,
                 wordDataModule,
                 shopPresentationModule,
-                shopDataModule
+                shopDataModule,
+                userPresentationModule
             )
         }
     }
