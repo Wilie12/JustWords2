@@ -8,4 +8,5 @@ android {
 
 dependencies {
     implementation(projects.user.domain)
+    implementation(projects.core.domain)
 }

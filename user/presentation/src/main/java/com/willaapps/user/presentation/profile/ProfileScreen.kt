@@ -113,6 +113,7 @@ fun ProfileScreen(
                     Column(
                         modifier = Modifier.weight(1f)
                     ) {
+                        // TODO - add ellipsis to username ...
                         Text(
                             text = state.username,
                             fontSize = 20.sp,

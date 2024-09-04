@@ -88,6 +88,7 @@ fun StartScreen(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
+            // TODO - add ellipsis to username ...
             StartToolbar(
                 text = stringResource(id = R.string.welcome, state.userName),
                 icon = UserIcon,
@@ -99,6 +100,7 @@ fun StartScreen(
                     .systemBarsPadding()
             )
             Spacer(modifier = Modifier.height(16.dp))
+            // TODO - add loading indicator when fetching from server
             DailyGoalBox(
                 dailyGoalAim = state.dailyGoalAim,
                 dailyGoalCurrent = state.dailyGoalCurrent
