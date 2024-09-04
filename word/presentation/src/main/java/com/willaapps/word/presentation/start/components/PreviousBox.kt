@@ -52,7 +52,7 @@ fun PreviousBox(
             fontSize = 20.sp,
             color = Color(0xFF121211)
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
