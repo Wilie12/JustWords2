@@ -8,6 +8,6 @@ data class UserInfo(
     val currentGoal: Int,
     val dailyGoal: Int,
     val lastPlayedTimestamp: ZonedDateTime,
-    val userName: String,
+    val username: String,
     val userId: String
 )

@@ -11,7 +11,7 @@ fun UserInfo.toUserInfoSerializable(): UserInfoSerializable {
         dailyGoal = dailyGoal,
         lastPlayedTimestamp = lastPlayedTimestamp.toInstant().toString(),
         currentGoal = currentGoal,
-        username = userName,
+        username = username,
         userId = userId
     )
 }
@@ -24,7 +24,7 @@ fun UserInfoSerializable.toUserInfo(): UserInfo {
         lastPlayedTimestamp = Instant.parse(lastPlayedTimestamp)
             .atZone(ZoneId.of("UTC")),
         currentGoal = currentGoal,
-        userName = username,
+        username = username,
         userId = userId
     )
 }
