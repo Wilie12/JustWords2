@@ -1,6 +1,7 @@
 package com.willaapps.user.presentation.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -25,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +41,8 @@ import com.willaapps.core.presentation.designsystem.components.JwToolbar
 import com.willaapps.core.presentation.designsystem.components.OutlinedActionButton
 import com.willaapps.user.presentation.R
 import com.willaapps.user.presentation.profile.components.SummaryItem
+import com.willaapps.user.presentation.profile.util.ProfileMode
+import com.willaapps.user.presentation.profile.util.profileModeToString
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -207,6 +211,41 @@ fun ProfileScreen(
             ) {
                 // TODO - history module
                 // TODO - stats module
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(100f))
+                        .background(Color(0xFFBDBFB5))
+                ) {
+                    ProfileMode.entries.forEach { profileMode ->
+                        Text(
+                            text = profileModeToString(profileMode),
+                            fontWeight = FontWeight.Medium,
+                            textAlign = TextAlign.Center,
+                            fontSize = 16.sp,
+                            color = if (profileMode == state.profileMode) {
+                                Color(0xFFD7D9CE)
+                            } else {
+                                Color(0xFF121211)
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(100f))
+                                .background(
+                                    color = if (profileMode == state.profileMode) {
+                                        Color(0xFF119DA4)
+                                    } else {
+                                        Color.Transparent
+                                    }
+                                )
+                                .clickable {
+                                    onAction(ProfileAction.OnModeChangeClick(profileMode))
+                                }
+                                .padding(8.dp)
+                        )
+                    }
+                }
             }
         }
     }

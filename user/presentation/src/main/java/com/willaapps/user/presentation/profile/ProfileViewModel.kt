@@ -12,6 +12,14 @@ class ProfileViewModel: ViewModel() {
     // TODO - read user from datastore
     // TODO - read user data from database
     fun onAction(action: ProfileAction) {
-
+        when (action) {
+            ProfileAction.OnLogoutClick -> Unit // TODO
+            is ProfileAction.OnModeChangeClick -> {
+                state = state.copy(
+                    profileMode = action.profileMode
+                )
+            }
+            else -> Unit
+        }
     }
 }

@@ -1,5 +1,7 @@
 package com.willaapps.user.presentation.profile
 
+import com.willaapps.user.presentation.profile.util.ProfileMode
+
 data class ProfileState(
     val username: String = "",
     val gamesCompleted: Int = 0,
