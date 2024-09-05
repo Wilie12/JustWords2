@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class UserStorageImpl(
@@ -17,20 +18,19 @@ class UserStorageImpl(
 ) : UserStorage {
     override fun get(): Flow<UserInfo?> {
         return dataStore.data.map { preferences ->
-            val userInfo = Json
-                .decodeFromString<UserInfoSerializable>(preferences[KEY_USER_INFO] ?: "")
-                .toUserInfo()
+            val userInfo = try {
+                Json
+                    .decodeFromString<UserInfoSerializable>(preferences[KEY_USER_INFO] ?: "")
+                    .toUserInfo()
+            } catch (e: Exception) {
+                null
+            }
 
-            val lastDayPlayed = userInfo.lastPlayedTimestamp.dayOfMonth
-            val nextDayAfterPlay = userInfo.lastPlayedTimestamp.plusDays(1).dayOfMonth
-            val today = ZonedDateTime.now().dayOfMonth
-            val newUserInfo = userInfo.copy(
-                dailyStreak = if (today != nextDayAfterPlay) 0 else userInfo.dailyStreak,
-                currentGoal = if (today != lastDayPlayed) 0 else userInfo.currentGoal
-            )
-            setUserInfo(newUserInfo)
+            userInfo?.let { setUserInfo(resetDailyIfNecessary(it)) }
 
-            preferences[KEY_USER_INFO]?.let { Json.decodeFromString<UserInfoSerializable>(it).toUserInfo() }
+            preferences[KEY_USER_INFO]?.let {
+                Json.decodeFromString<UserInfoSerializable>(it).toUserInfo()
+            }
         }
     }
 
@@ -54,7 +54,7 @@ class UserStorageImpl(
         }
     }
 
-    override suspend fun increaseDailyGoal() {
+    override suspend fun setIncreasedDailyGoal() {
         dataStore.edit { preferences ->
             val currentUserInfo = Json
                 .decodeFromString<UserInfoSerializable>(
@@ -62,26 +62,7 @@ class UserStorageImpl(
                 )
                 .toUserInfo()
 
-            val lastDayPlayed = currentUserInfo.lastPlayedTimestamp.dayOfMonth
-            val nextDayAfterPlay = currentUserInfo.lastPlayedTimestamp.plusDays(1).dayOfMonth
-            val today = ZonedDateTime.now().dayOfMonth
-
-            val newCurrentGoal = if (today != lastDayPlayed) 1 else currentUserInfo.currentGoal + 1
-            val newDailyStreak = if (today == lastDayPlayed) {
-                currentUserInfo.dailyStreak
-            } else if (today != nextDayAfterPlay) {
-                1
-            } else {
-                currentUserInfo.dailyStreak + 1
-            }
-            val newBestStreak =
-                if (newDailyStreak > currentUserInfo.bestStreak) newDailyStreak else currentUserInfo.bestStreak
-
-            val newUserInfo = currentUserInfo.copy(
-                currentGoal = newCurrentGoal,
-                dailyGoal = newDailyStreak,
-                bestStreak = newBestStreak
-            )
+            val newUserInfo = increaseDailyGoal(currentUserInfo)
 
             preferences[KEY_USER_INFO] = Json.encodeToString(newUserInfo.toUserInfoSerializable())
         }
@@ -104,6 +85,56 @@ class UserStorageImpl(
         dataStore.edit { preferences ->
             preferences.remove(KEY_USER_INFO)
         }
+    }
+
+    private fun resetDailyIfNecessary(userInfo: UserInfo): UserInfo {
+        val lastDayPlayed = userInfo.lastPlayedTimestamp
+            .withZoneSameInstant(ZoneId.of("UTC"))?.dayOfMonth
+        val nextDayAfterPlay = userInfo.lastPlayedTimestamp
+            .withZoneSameInstant(ZoneId.of("UTC"))?.plusDays(1)?.dayOfMonth
+        val today = ZonedDateTime.now()
+            .withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth
+
+        val newDailyStreak = if (today == lastDayPlayed) {
+            userInfo.dailyStreak
+        } else if (today != nextDayAfterPlay) {
+            0
+        } else {
+            userInfo.dailyStreak + 1
+        }
+
+        return userInfo.copy(
+            dailyStreak = newDailyStreak,
+            currentGoal = if (today != lastDayPlayed) 0 else userInfo.currentGoal
+        )
+    }
+
+    private fun increaseDailyGoal(userInfo: UserInfo): UserInfo {
+        val lastDayPlayed = userInfo.lastPlayedTimestamp
+            .withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth
+        val nextDayAfterPlay = userInfo.lastPlayedTimestamp
+            .withZoneSameInstant(ZoneId.of("UTC")).plusDays(1).dayOfMonth
+        val today = ZonedDateTime.now()
+            .withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth
+
+        val newCurrentGoal = if (today != lastDayPlayed) 1 else userInfo.currentGoal + 1
+        val newDailyStreak = if (today == lastDayPlayed) {
+            if (userInfo.dailyStreak == 0) 1 else userInfo.dailyStreak
+        } else if (today != nextDayAfterPlay) {
+            1
+        } else {
+            userInfo.dailyStreak + 1
+        }
+        val newBestStreak =
+            if (newDailyStreak > userInfo.bestStreak) newDailyStreak else userInfo.bestStreak
+
+        return userInfo.copy(
+            currentGoal = newCurrentGoal,
+            dailyStreak = newDailyStreak,
+            bestStreak = newBestStreak,
+            lastPlayedTimestamp = ZonedDateTime.now()
+                .withZoneSameInstant(ZoneId.of("UTC"))
+        )
     }
 
     companion object {
