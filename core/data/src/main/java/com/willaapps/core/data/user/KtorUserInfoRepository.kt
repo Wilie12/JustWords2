@@ -14,7 +14,7 @@ import io.ktor.client.HttpClient
 class KtorUserInfoRepository(
     private val httpClient: HttpClient,
     private val userStorage: UserStorage
-): UserInfoRepository {
+) : UserInfoRepository {
     override suspend fun getUserInfo(userId: String): EmptyResult<DataError.Network> {
         val result = httpClient.get<UserInfoResponse>(
             route = "/getUserInfo",
@@ -25,8 +25,20 @@ class KtorUserInfoRepository(
 
         when (result) {
             is Result.Success -> {
-                userStorage.setUserInfo(result.data.userInfo.toUserInfo())
+                userStorage.get().collect { userInfo ->
+                    if (userInfo != null) {
+                        if (result.data.userInfo.toUserInfo().lastPlayedTimestamp.isBefore(userInfo.lastPlayedTimestamp)) {
+                            setUserInfo(userInfo)
+                            return@collect
+                        }
+                        if (result.data.userInfo.toUserInfo().lastPlayedTimestamp.isEqual(userInfo.lastPlayedTimestamp)) {
+                            return@collect
+                        }
+                        userStorage.setUserInfo(result.data.userInfo.toUserInfo())
+                    }
+                }
             }
+
             else -> Unit
         }
 

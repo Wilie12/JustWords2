@@ -8,5 +8,6 @@ data class StartState(
     val previousWord: PreviousWord? = null,
     val dailyGoalAim: Int = 0,
     val dailyGoalCurrent: Int = 0,
-    val books: List<Book> = emptyList()
+    val books: List<Book> = emptyList(),
+    val isLoading: Boolean = false
 )

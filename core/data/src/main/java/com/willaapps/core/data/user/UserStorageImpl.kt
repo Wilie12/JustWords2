@@ -17,12 +17,23 @@ class UserStorageImpl(
 ) : UserStorage {
     override fun get(): Flow<UserInfo?> {
         return dataStore.data.map { preferences ->
-            preferences[KEY_USER_INFO]
-                ?.let { Json.decodeFromString<UserInfoSerializable>(it).toUserInfo() }
+            val userInfo = Json
+                .decodeFromString<UserInfoSerializable>(preferences[KEY_USER_INFO] ?: "")
+                .toUserInfo()
+
+            val lastDayPlayed = userInfo.lastPlayedTimestamp.dayOfMonth
+            val nextDayAfterPlay = userInfo.lastPlayedTimestamp.plusDays(1).dayOfMonth
+            val today = ZonedDateTime.now().dayOfMonth
+            val newUserInfo = userInfo.copy(
+                dailyStreak = if (today != nextDayAfterPlay) 0 else userInfo.dailyStreak,
+                currentGoal = if (today != lastDayPlayed) 0 else userInfo.currentGoal
+            )
+            setUserInfo(newUserInfo)
+
+            preferences[KEY_USER_INFO]?.let { Json.decodeFromString<UserInfoSerializable>(it).toUserInfo() }
         }
     }
 
-    // TODO - load data from server
     override suspend fun setUserInfo(userInfo: UserInfo) {
         dataStore.edit { preferences ->
             preferences[KEY_USER_INFO] = Json
