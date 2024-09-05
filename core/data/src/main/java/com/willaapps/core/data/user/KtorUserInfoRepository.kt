@@ -10,6 +10,9 @@ import com.willaapps.core.domain.util.EmptyResult
 import com.willaapps.core.domain.util.Result
 import com.willaapps.core.domain.util.asEmptyDataResult
 import io.ktor.client.HttpClient
+import kotlinx.coroutines.flow.catch
+import timber.log.Timber
+import java.time.ZoneId
 
 class KtorUserInfoRepository(
     private val httpClient: HttpClient,
@@ -25,18 +28,33 @@ class KtorUserInfoRepository(
 
         when (result) {
             is Result.Success -> {
-                userStorage.get().collect { userInfo ->
-                    if (userInfo != null) {
-                        if (result.data.userInfo.toUserInfo().lastPlayedTimestamp.isBefore(userInfo.lastPlayedTimestamp)) {
-                            setUserInfo(userInfo)
-                            return@collect
-                        }
-                        if (result.data.userInfo.toUserInfo().lastPlayedTimestamp.isEqual(userInfo.lastPlayedTimestamp)) {
-                            return@collect
+                userStorage.get()
+                    .catch {
+                        Timber.d(it)
+                    }
+                    .collect { userInfo ->
+                        if (userInfo != null) {
+                            if (result.data.userInfo.toUserInfo().lastPlayedTimestamp
+                                    .withZoneSameInstant(ZoneId.of("UTC")).isBefore(
+                                        userInfo.lastPlayedTimestamp
+                                            .withZoneSameInstant(ZoneId.of("UTC"))
+                                    )
+                            ) {
+                                // TODO - optionally consider adding worker to sync later
+                                setUserInfo(userInfo)
+                                return@collect
+                            }
+                            if (result.data.userInfo.toUserInfo().lastPlayedTimestamp
+                                    .withZoneSameInstant(ZoneId.of("UTC")).isEqual(
+                                        userInfo.lastPlayedTimestamp
+                                            .withZoneSameInstant(ZoneId.of("UTC"))
+                                    )
+                            ) {
+                                return@collect
+                            }
                         }
                         userStorage.setUserInfo(result.data.userInfo.toUserInfo())
                     }
-                }
             }
 
             else -> Unit

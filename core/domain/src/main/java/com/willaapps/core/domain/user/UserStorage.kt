@@ -7,7 +7,7 @@ interface UserStorage {
     fun get(): Flow<UserInfo?>
     suspend fun setUserInfo(userInfo: UserInfo)
     suspend fun updateUsername(username: String)
-    suspend fun increaseDailyGoal()
+    suspend fun setIncreasedDailyGoal()
     suspend fun updateDailyGoal(newGoal: Int)
     suspend fun clearUserInfo()
 }

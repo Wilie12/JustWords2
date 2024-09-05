@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.willaapps.core.domain.user.UserStorage
 import com.willaapps.core.domain.word.LocalWordDataSource
 import com.willaapps.word.domain.PreviousWord
 import com.willaapps.word.domain.PreviousWordStorage
@@ -22,7 +23,8 @@ import kotlinx.coroutines.launch
 class WordViewModel(
     private val localWordDataSource: LocalWordDataSource,
     private val savedStateHandle: SavedStateHandle,
-    private val previousWordStorage: PreviousWordStorage
+    private val previousWordStorage: PreviousWordStorage,
+    private val userStorage: UserStorage
 ) : ViewModel() {
 
     var state by mutableStateOf(WordState())
@@ -98,6 +100,7 @@ class WordViewModel(
                             // TODO - save to history
                             // TODO - save in daily goal
                             viewModelScope.launch {
+                                userStorage.setIncreasedDailyGoal()
                                 previousWordStorage.set(
                                     PreviousWord(
                                         bookId = state.book.bookId,
