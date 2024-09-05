@@ -1,5 +1,6 @@
 package com.willaapps.word.presentation.start
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -100,11 +101,12 @@ fun StartScreen(
                     .systemBarsPadding()
             )
             Spacer(modifier = Modifier.height(16.dp))
-            // TODO - add loading indicator when fetching from server
-            DailyGoalBox(
-                dailyGoalAim = state.dailyGoalAim,
-                dailyGoalCurrent = state.dailyGoalCurrent
-            )
+            AnimatedVisibility(visible = !state.isLoading) {
+                DailyGoalBox(
+                    dailyGoalAim = state.dailyGoalAim,
+                    dailyGoalCurrent = state.dailyGoalCurrent
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
             if (state.previousWord != null) {
                 PreviousBox(

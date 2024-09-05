@@ -27,6 +27,8 @@ class StartViewModel(
         private set
 
     init {
+        state = state.copy(isLoading = true)
+
         viewModelScope.launch {
             userInfoRepository.getUserInfo(
                 userId = sessionStorage.get()?.userId ?: ""
@@ -40,6 +42,8 @@ class StartViewModel(
                     dailyGoalAim = it.dailyGoal,
                     dailyGoalCurrent = it.currentGoal
                 )
+                state = state.copy(isLoading = false)
+
             }
             .launchIn(viewModelScope)
         localWordDataSource.getBooks()
