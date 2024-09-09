@@ -89,7 +89,6 @@ fun StartScreen(
         Column(
             modifier = Modifier.padding(16.dp)
         ) {
-            // TODO - add ellipsis to username ...
             StartToolbar(
                 text = stringResource(id = R.string.welcome, state.userName),
                 icon = UserIcon,

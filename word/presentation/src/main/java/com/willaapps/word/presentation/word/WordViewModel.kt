@@ -12,6 +12,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.willaapps.core.domain.user.UserStorage
+import com.willaapps.core.domain.user.history.WordHistory
+import com.willaapps.core.domain.user.history.WordHistoryRepository
+import com.willaapps.core.domain.util.Result
 import com.willaapps.core.domain.word.LocalWordDataSource
 import com.willaapps.word.domain.PreviousWord
 import com.willaapps.word.domain.PreviousWordStorage
@@ -19,12 +22,15 @@ import com.willaapps.word.domain.toWordGuessable
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class WordViewModel(
     private val localWordDataSource: LocalWordDataSource,
     private val savedStateHandle: SavedStateHandle,
     private val previousWordStorage: PreviousWordStorage,
-    private val userStorage: UserStorage
+    private val userStorage: UserStorage,
+    private val wordHistoryRepository: WordHistoryRepository
 ) : ViewModel() {
 
     var state by mutableStateOf(WordState())
@@ -98,7 +104,6 @@ class WordViewModel(
                             )
                         } else {
                             // TODO - save to history
-                            // TODO - save in daily goal
                             viewModelScope.launch {
                                 userStorage.setIncreasedDailyGoal()
                                 previousWordStorage.set(
@@ -111,6 +116,27 @@ class WordViewModel(
                                         groupNumber = checkNotNull(savedStateHandle["groupNumber"])
                                     )
                                 )
+                                when (val result = wordHistoryRepository.insertHistoryItem(
+                                    wordHistory = WordHistory(
+                                        bookName = state.book.name,
+                                        bookColor = state.book.color,
+                                        setName = state.set.name,
+                                        groupNumber = checkNotNull(savedStateHandle["groupNumber"]),
+                                        dateTimeUtc = ZonedDateTime.now()
+                                            .withZoneSameInstant(ZoneId.of("UTC")),
+                                        perfectGuessed = state.perfectGuesses,
+                                        wordListSize = state.wordsNumber,
+                                        id = null
+                                    )
+                                )) {
+                                    is Result.Error -> {
+                                        // TODO - send error event
+                                    }
+                                    is Result.Success -> {
+                                        // TODO - optionally send event
+                                        Unit
+                                    }
+                                }
                             }
                             state = state.copy(
                                 buttonOption = ButtonOption.BUTTON_FINISH
