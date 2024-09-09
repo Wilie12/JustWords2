@@ -2,7 +2,9 @@ package com.willaapps.core.database.di
 
 import androidx.room.Room
 import com.willaapps.core.database.RoomLocalWordDataSource
+import com.willaapps.core.database.RoomLocalWordHistoryDataSource
 import com.willaapps.core.database.WordDatabase
+import com.willaapps.core.domain.user.history.LocalWordHistoryDataSource
 import com.willaapps.core.domain.word.LocalWordDataSource
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.singleOf
@@ -19,6 +21,8 @@ val databaseModule = module {
     }
 
     single { get<WordDatabase>().wordDao }
+    single { get<WordDatabase>().userDao }
 
     singleOf(::RoomLocalWordDataSource).bind<LocalWordDataSource>()
+    singleOf(::RoomLocalWordHistoryDataSource).bind<LocalWordHistoryDataSource>()
 }
