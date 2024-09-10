@@ -2,6 +2,7 @@ package com.willaapps.user.presentation.profile
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -14,7 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,7 +47,10 @@ import com.willaapps.core.presentation.designsystem.components.JwToolbar
 import com.willaapps.core.presentation.designsystem.components.OutlinedActionButton
 import com.willaapps.user.presentation.R
 import com.willaapps.user.presentation.profile.components.SummaryItem
+import com.willaapps.user.presentation.profile.components.WordHistoryItem
+import com.willaapps.user.presentation.profile.util.ProfileLevel
 import com.willaapps.user.presentation.profile.util.ProfileMode
+import com.willaapps.user.presentation.profile.util.profileLevelToString
 import com.willaapps.user.presentation.profile.util.profileModeToString
 import org.koin.androidx.compose.koinViewModel
 
@@ -198,7 +206,7 @@ fun ProfileScreen(
                     SummaryItem(
                         icon = LevelIcon,
                         name = stringResource(R.string.level),
-                        value = state.level,
+                        value = profileLevelToString(profileLevel = state.level),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -212,7 +220,6 @@ fun ProfileScreen(
                     .background(Color(0xFFD7D9CE))
                     .padding(16.dp)
             ) {
-                // TODO - history module
                 // TODO - stats module
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -249,6 +256,48 @@ fun ProfileScreen(
                         )
                     }
                 }
+                Spacer(modifier = Modifier.height(8.dp))
+                // TODO - possibly extract LazyColumn outside when
+                // TODO - animation when changing modes
+                // TODO - add indicator what history is empty
+                if (!state.isLoading) {
+                    when (state.profileMode) {
+                        ProfileMode.HISTORY_MODE -> {
+                            LazyColumn(
+                                reverseLayout = true,
+                                state = rememberLazyListState(
+                                    initialFirstVisibleItemIndex =
+                                    state.historyItems.lastIndex
+                                ),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(100f))
+                            ) {
+                                itemsIndexed(
+                                    items = state.historyItems.reversed(),
+                                    key = { _, wordHistory -> wordHistory.id!! }
+                                ) { index, wordHistory ->
+                                    WordHistoryItem(
+                                        wordHistory = wordHistory,
+                                        index = index + 1
+                                    )
+                                }
+                            }
+                        }
+
+                        ProfileMode.STATS_MODE -> {
+                            // TODO
+                        }
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             }
         }
     }
@@ -264,7 +313,8 @@ private fun ProfileScreenPreview() {
                 gamesCompleted = 123,
                 dailyStreak = 7,
                 bestStreak = 7,
-                level = "Advanced"
+                level = ProfileLevel.ADVANCED,
+                historyItems = emptyList(),
             ),
             onAction = {}
         )

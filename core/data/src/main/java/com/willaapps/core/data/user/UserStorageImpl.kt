@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -27,6 +28,7 @@ class UserStorageImpl(
             }
 
             userInfo?.let { setUserInfo(resetDailyIfNecessary(it)) }
+            Timber.d("USER INFO CHANGED")
 
             preferences[KEY_USER_INFO]?.let {
                 Json.decodeFromString<UserInfoSerializable>(it).toUserInfo()
@@ -95,12 +97,10 @@ class UserStorageImpl(
         val today = ZonedDateTime.now()
             .withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth
 
-        val newDailyStreak = if (today == lastDayPlayed) {
+        val newDailyStreak = if (today == lastDayPlayed || today == nextDayAfterPlay) {
             userInfo.dailyStreak
-        } else if (today != nextDayAfterPlay) {
-            0
         } else {
-            userInfo.dailyStreak + 1
+            0
         }
 
         return userInfo.copy(
