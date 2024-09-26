@@ -103,7 +103,6 @@ class WordViewModel(
                                 buttonOption = ButtonOption.BUTTON_CHECK
                             )
                         } else {
-                            // TODO - save to history
                             viewModelScope.launch {
                                 userStorage.setIncreasedDailyGoal()
                                 previousWordStorage.set(

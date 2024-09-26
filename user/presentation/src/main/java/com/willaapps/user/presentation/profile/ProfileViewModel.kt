@@ -11,6 +11,7 @@ import com.willaapps.user.presentation.profile.util.calculateLevel
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val userStorage: UserStorage,
@@ -20,7 +21,6 @@ class ProfileViewModel(
     var state by mutableStateOf(ProfileState())
         private set
 
-    // TODO - read user data from database
     init {
         state = state.copy(isLoading = true)
         userStorage.get()
@@ -42,6 +42,9 @@ class ProfileViewModel(
                 )
             }
             .launchIn(viewModelScope)
+        viewModelScope.launch {
+            wordHistoryRepository.fetchHistoryItems()
+        }
     }
 
     fun onAction(action: ProfileAction) {
