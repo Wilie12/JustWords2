@@ -257,17 +257,30 @@ fun ProfileScreen(
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                // TODO - possibly extract LazyColumn outside when
                 // TODO - animation when changing modes
                 // TODO - add indicator what history is empty
                 if (!state.isLoading) {
                     when (state.profileMode) {
                         ProfileMode.HISTORY_MODE -> {
+                            if (state.historyItems.isEmpty()) {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "Nothing to display, play now.",
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF5E5E5E)
+                                    )
+                                }
+                            }
                             LazyColumn(
                                 reverseLayout = true,
                                 state = rememberLazyListState(
                                     initialFirstVisibleItemIndex =
-                                    state.historyItems.lastIndex
+                                    if (state.historyItems.isNotEmpty()) {
+                                        state.historyItems.lastIndex
+                                    } else 0
                                 ),
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
                                 modifier = Modifier
