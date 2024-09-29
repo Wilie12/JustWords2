@@ -10,4 +10,7 @@
     <string name="level">Level</string>
     <string name="history">History</string>
     <string name="stats">Stats</string>
+    <string name="daily">Daily</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>
