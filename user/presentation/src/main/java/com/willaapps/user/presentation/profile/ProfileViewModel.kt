@@ -20,6 +20,7 @@ class ProfileViewModel(
 
     var state by mutableStateOf(ProfileState())
         private set
+    // TODO - map historyItems to graph items
 
     init {
         state = state.copy(isLoading = true)
