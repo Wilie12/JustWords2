@@ -221,6 +221,8 @@ fun ProfileScreen(
                     .padding(16.dp)
             ) {
                 // TODO - stats module
+                // TODO - add daily graph
+                // TODO - create weekly graph
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
@@ -258,7 +260,6 @@ fun ProfileScreen(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 // TODO - animation when changing modes
-                // TODO - add indicator what history is empty
                 if (!state.isLoading) {
                     when (state.profileMode) {
                         ProfileMode.HISTORY_MODE -> {

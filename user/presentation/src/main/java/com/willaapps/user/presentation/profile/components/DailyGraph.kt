@@ -116,7 +116,6 @@ fun DailyGraph(
                             .clip(RoundedCornerShape(100f))
                             .background(Color(0xFFBDBFB5))
                     ) {
-                        // TODO - use cubic to smooth curves
                         val pathToday = Path().apply {
                             moveTo(0f, size.height)
                             todayPlayedSorted.forEach {
@@ -125,7 +124,6 @@ fun DailyGraph(
                                     size.height - ((((size.height * 2) / 3) * it.timesPlayed) / maxPlayed)
                                 lineTo(firstX, firstY)
                             }
-//                            lineTo(size.width, size.height)
                         }
                         val pathYesterday = Path().apply {
                             moveTo(0f, size.height)
