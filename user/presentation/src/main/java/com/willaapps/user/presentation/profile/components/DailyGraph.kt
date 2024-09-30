@@ -21,8 +21,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -121,7 +125,7 @@ fun DailyGraph(
                                     size.height - ((((size.height * 2) / 3) * it.timesPlayed) / maxPlayed)
                                 lineTo(firstX, firstY)
                             }
-                            lineTo(size.width, size.height)
+//                            lineTo(size.width, size.height)
                         }
                         val pathYesterday = Path().apply {
                             moveTo(0f, size.height)
@@ -133,13 +137,53 @@ fun DailyGraph(
                             }
                             lineTo(size.width, size.height)
                         }
-                        drawPath(pathToday, color = Color(0xFF119DA4), style = Stroke(width = 5f))
-                        drawPath(pathYesterday, color = Color(0xFF5E5E5E), style = Stroke(width = 5f))
+                        drawPath(
+                            pathYesterday,
+                            color = Color(0xFF5E5E5E),
+                            style = Stroke(
+                                width = 12f,
+                                cap = StrokeCap.Round,
+                                join = StrokeJoin.Round,
+                                pathEffect = PathEffect.cornerPathEffect(10f)
+                            )
+                        )
+                        drawPath(
+                            pathYesterday, brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xFF5E5E5E).copy(0.7f),
+                                    Color.Transparent
+                                )
+                            )
+                        )
+                        drawPath(
+                            pathToday,
+                            color = Color(0xFF119DA4),
+                            style = Stroke(
+                                width = 12f,
+                                cap = StrokeCap.Round,
+                                join = StrokeJoin.Round,
+                                pathEffect = PathEffect.cornerPathEffect(10f)
+                            )
+                        )
+                        drawPath(
+                            pathToday.apply {
+                                lineTo(
+                                    (todayPlayedSorted.last().hour * size.width) / 25,
+                                    size.height
+                                )
+                            },
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    Color(0xFF119DA4).copy(0.7f),
+                                    Color.Transparent
+                                )
+                            )
+                        )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.Absolute.SpaceBetween,
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
@@ -151,7 +195,7 @@ fun DailyGraph(
                                 text = it.toString(),
                                 fontSize = 14.sp,
                                 color = Color(0xFF121211),
-                                textAlign = TextAlign.End
+                                textAlign = TextAlign.Start
                             )
                         }
                     }
@@ -169,7 +213,7 @@ fun DailyGraph(
                             text = it.toString(),
                             fontSize = 14.sp,
                             color = Color(0xFF121211),
-                            textAlign = TextAlign.End
+                            textAlign = TextAlign.Start
                         )
                     }
                 }
