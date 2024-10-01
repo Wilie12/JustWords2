@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +19,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +49,9 @@ import com.willaapps.core.presentation.designsystem.components.GradientBall
 import com.willaapps.core.presentation.designsystem.components.JwToolbar
 import com.willaapps.core.presentation.designsystem.components.OutlinedActionButton
 import com.willaapps.user.presentation.R
+import com.willaapps.user.presentation.profile.components.DailyGraph
 import com.willaapps.user.presentation.profile.components.SummaryItem
+import com.willaapps.user.presentation.profile.components.WeeklyGraph
 import com.willaapps.user.presentation.profile.components.WordHistoryItem
 import com.willaapps.user.presentation.profile.util.ProfileLevel
 import com.willaapps.user.presentation.profile.util.ProfileMode
@@ -261,47 +266,106 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 // TODO - animation when changing modes
                 if (!state.isLoading) {
-                    when (state.profileMode) {
-                        ProfileMode.HISTORY_MODE -> {
-                            if (state.historyItems.isEmpty()) {
-                                Box(
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        text = "Nothing to display, play now.",
-                                        fontSize = 16.sp,
-                                        color = Color(0xFF5E5E5E)
-                                    )
-                                }
-                            }
-                            LazyColumn(
-                                reverseLayout = true,
-                                state = rememberLazyListState(
-                                    initialFirstVisibleItemIndex =
-                                    if (state.historyItems.isNotEmpty()) {
-                                        state.historyItems.lastIndex
-                                    } else 0
-                                ),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clip(RoundedCornerShape(100f))
-                            ) {
-                                itemsIndexed(
-                                    items = state.historyItems.reversed(),
-                                    key = { _, wordHistory -> wordHistory.id!! }
-                                ) { index, wordHistory ->
-                                    WordHistoryItem(
-                                        wordHistory = wordHistory,
-                                        index = index + 1
-                                    )
-                                }
-                            }
+                    if (state.historyItems.isEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = stringResource(R.string.nothing_to_display_play_now),
+                                fontSize = 16.sp,
+                                color = Color(0xFF5E5E5E)
+                            )
                         }
-
-                        ProfileMode.STATS_MODE -> {
-                            // TODO
+                    } else {
+                        when (state.profileMode) {
+                            ProfileMode.HISTORY_MODE -> {
+                                LazyColumn(
+                                    reverseLayout = true,
+                                    state = rememberLazyListState(
+                                        initialFirstVisibleItemIndex =
+                                        if (state.historyItems.isNotEmpty()) {
+                                            state.historyItems.lastIndex
+                                        } else 0
+                                    ),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clip(RoundedCornerShape(100f))
+                                ) {
+                                    itemsIndexed(
+                                        items = state.historyItems.reversed(),
+                                        key = { _, wordHistory -> wordHistory.id!! }
+                                    ) { index, wordHistory ->
+                                        WordHistoryItem(
+                                            wordHistory = wordHistory,
+                                            index = index + 1
+                                        )
+                                    }
+                                }
+                            }
+                            ProfileMode.STATS_MODE -> {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .verticalScroll(rememberScrollState())
+                                ) {
+                                    if (state.todayPlays.isNotEmpty() || state.yesterdayPlays.isNotEmpty()) {
+                                        DailyGraph(
+                                            todayPlays = state.todayPlays,
+                                            yesterdayPlays = state.yesterdayPlays,
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    } else {
+                                        Box(modifier = Modifier
+                                            .fillMaxWidth()
+                                            .aspectRatio(2f),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(
+                                                text = stringResource(R.string.daily),
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Medium,
+                                                color = Color(0xFF121211),
+                                                modifier = Modifier.align(Alignment.TopStart)
+                                            )
+                                            Text(
+                                                text = stringResource(R.string.nothing_to_display_play_now),
+                                                fontSize = 16.sp,
+                                                color = Color(0xFF5E5E5E),
+                                                modifier = Modifier.align(Alignment.Center)
+                                            )
+                                        }
+                                    }
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    if (state.weeklyPlays.isNotEmpty()) {
+                                        WeeklyGraph(
+                                            weeklyPlays = state.weeklyPlays,
+                                            today = state.today
+                                        )
+                                    } else {
+                                        Box(modifier = Modifier
+                                            .fillMaxWidth()
+                                            .aspectRatio(2f),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Text(
+                                                text = stringResource(R.string.weekly),
+                                                fontSize = 16.sp,
+                                                fontWeight = FontWeight.Medium,
+                                                color = Color(0xFF121211),
+                                                modifier = Modifier.align(Alignment.TopStart)
+                                            )
+                                            Text(
+                                                text = stringResource(R.string.nothing_to_display_play_now),
+                                                fontSize = 16.sp,
+                                                color = Color(0xFF5E5E5E),
+                                                modifier = Modifier.align(Alignment.Center)
+                                            )
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 } else {
