@@ -198,10 +198,6 @@ private fun WeeklyGraphPreview() {
                 WeeklyGraphItem(
                     dayOfWeek = 5,
                     timesPlayed = 2
-                ),
-                WeeklyGraphItem(
-                    dayOfWeek = 6,
-                    timesPlayed = 10
                 )
             ),
             today = 5
