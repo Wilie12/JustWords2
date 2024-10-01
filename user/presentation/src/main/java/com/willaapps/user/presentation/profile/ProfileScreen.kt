@@ -225,9 +225,6 @@ fun ProfileScreen(
                     .background(Color(0xFFD7D9CE))
                     .padding(16.dp)
             ) {
-                // TODO - stats module
-                // TODO - add daily graph
-                // TODO - create weekly graph
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier

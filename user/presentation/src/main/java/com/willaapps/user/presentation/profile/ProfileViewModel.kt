@@ -9,6 +9,7 @@ import com.willaapps.core.domain.user.UserStorage
 import com.willaapps.core.domain.user.history.WordHistory
 import com.willaapps.core.domain.user.history.WordHistoryRepository
 import com.willaapps.user.presentation.profile.util.DailyGraphItem
+import com.willaapps.user.presentation.profile.util.WeeklyGraphItem
 import com.willaapps.user.presentation.profile.util.calculateLevel
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
@@ -16,15 +17,17 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.ZonedDateTime
+import java.time.temporal.IsoFields
 
 class ProfileViewModel(
     private val userStorage: UserStorage,
     private val wordHistoryRepository: WordHistoryRepository
 ) : ViewModel() {
 
+    // TODO - edit profile
+    // TODO - logout
     var state by mutableStateOf(ProfileState())
         private set
-    // TODO - map historyItems to graph items
 
     init {
         state = state.copy(isLoading = true)
@@ -45,18 +48,22 @@ class ProfileViewModel(
                     historyItems = it,
                     level = calculateLevel(historyItems = it),
                     isLoading = false,
-                    todayPlays = filterHistoryItemsByDayAndYear(
-                        historyItems = it,
+                    todayPlays = it.filterHistoryItemsByDayAndYear(
                         day = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth,
                         year = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).year
                     )
                         .mapHistoryItemsToDailyGraphItems(),
-                    yesterdayPlays = filterHistoryItemsByDayAndYear(
-                        historyItems = it,
-                        day = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).minusDays(1).dayOfMonth,
+                    yesterdayPlays = it.filterHistoryItemsByDayAndYear(
+                        day = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"))
+                            .minusDays(1).dayOfMonth,
                         year = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")).year
                     )
-                        .mapHistoryItemsToDailyGraphItems()
+                        .mapHistoryItemsToDailyGraphItems(),
+                    weeklyPlays = it.filterHistoryItemsByWeekYear(
+                        weekYear = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC"))
+                            .get(IsoFields.WEEK_OF_WEEK_BASED_YEAR)
+                    )
+                        .mapHistoryItemsToWeeklyGraphItems()
                 )
             }
             .launchIn(viewModelScope)
@@ -73,16 +80,16 @@ class ProfileViewModel(
                     profileMode = action.profileMode
                 )
             }
+
             else -> Unit
         }
     }
 
-    private fun filterHistoryItemsByDayAndYear(
-        historyItems: List<WordHistory>,
+    private fun List<WordHistory>.filterHistoryItemsByDayAndYear(
         day: Int,
         year: Int
     ): List<WordHistory> {
-        return historyItems.filter {
+        return this.filter {
             it.dateTimeUtc.withZoneSameInstant(ZoneId.of("UTC")).year == year &&
                     it.dateTimeUtc.withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth == day
         }
@@ -99,6 +106,30 @@ class ProfileViewModel(
             .map { map ->
                 DailyGraphItem(
                     hour = map.key,
+                    timesPlayed = map.value.sumOf { it.timesPlayed }
+                )
+            }
+    }
+
+    private fun List<WordHistory>.filterHistoryItemsByWeekYear(
+        weekYear: Int
+    ): List<WordHistory> {
+        return this.filter {
+            it.dateTimeUtc.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR) == weekYear
+        }
+    }
+
+    private fun List<WordHistory>.mapHistoryItemsToWeeklyGraphItems(): List<WeeklyGraphItem> {
+        return this.map { wordHistory ->
+            WeeklyGraphItem(
+                dayOfWeek = wordHistory.dateTimeUtc.withZoneSameInstant(ZoneId.systemDefault()).dayOfWeek.value - 1,
+                timesPlayed = 1
+            )
+        }
+            .groupBy { weeklyGraphItem -> weeklyGraphItem.dayOfWeek }
+            .map { map ->
+                WeeklyGraphItem(
+                    dayOfWeek = map.key,
                     timesPlayed = map.value.sumOf { it.timesPlayed }
                 )
             }
