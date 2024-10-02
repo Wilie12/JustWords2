@@ -135,48 +135,52 @@ fun DailyGraph(
                             }
                             lineTo(size.width, size.height)
                         }
-                        drawPath(
-                            pathYesterday,
-                            color = Color(0xFF5E5E5E),
-                            style = Stroke(
-                                width = 12f,
-                                cap = StrokeCap.Round,
-                                join = StrokeJoin.Round,
-                                pathEffect = PathEffect.cornerPathEffect(10f)
-                            )
-                        )
-                        drawPath(
-                            pathYesterday, brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color(0xFF5E5E5E).copy(0.7f),
-                                    Color.Transparent
+                        if (yesterdayPlays.isNotEmpty()) {
+                            drawPath(
+                                pathYesterday,
+                                color = Color(0xFF5E5E5E),
+                                style = Stroke(
+                                    width = 12f,
+                                    cap = StrokeCap.Round,
+                                    join = StrokeJoin.Round,
+                                    pathEffect = PathEffect.cornerPathEffect(10f)
                                 )
                             )
-                        )
-                        drawPath(
-                            pathToday,
-                            color = Color(0xFF119DA4),
-                            style = Stroke(
-                                width = 12f,
-                                cap = StrokeCap.Round,
-                                join = StrokeJoin.Round,
-                                pathEffect = PathEffect.cornerPathEffect(10f)
-                            )
-                        )
-                        drawPath(
-                            pathToday.apply {
-                                lineTo(
-                                    (todayPlayedSorted.last().hour * size.width) / 25,
-                                    size.height
-                                )
-                            },
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    Color(0xFF119DA4).copy(0.7f),
-                                    Color.Transparent
+                            drawPath(
+                                pathYesterday, brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color(0xFF5E5E5E).copy(0.7f),
+                                        Color.Transparent
+                                    )
                                 )
                             )
-                        )
+                        }
+                        if (todayPlays.isNotEmpty()) {
+                            drawPath(
+                                pathToday,
+                                color = Color(0xFF119DA4),
+                                style = Stroke(
+                                    width = 12f,
+                                    cap = StrokeCap.Round,
+                                    join = StrokeJoin.Round,
+                                    pathEffect = PathEffect.cornerPathEffect(10f)
+                                )
+                            )
+                            drawPath(
+                                pathToday.apply {
+                                    lineTo(
+                                        (todayPlayedSorted.last().hour * size.width) / 25,
+                                        size.height
+                                    )
+                                },
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color(0xFF119DA4).copy(0.7f),
+                                        Color.Transparent
+                                    )
+                                )
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(
