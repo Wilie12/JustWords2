@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import timber.log.Timber
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class UserStorageImpl(
     private val dataStore: DataStore<Preferences>
 ) : UserStorage {
+    // TODO - create worker to sync data later if no server connection
     override fun get(): Flow<UserInfo?> {
         return dataStore.data.map { preferences ->
             val userInfo = try {
@@ -28,7 +28,6 @@ class UserStorageImpl(
             }
 
             userInfo?.let { setUserInfo(resetDailyIfNecessary(it)) }
-            Timber.d("USER INFO CHANGED")
 
             preferences[KEY_USER_INFO]?.let {
                 Json.decodeFromString<UserInfoSerializable>(it).toUserInfo()

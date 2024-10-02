@@ -130,11 +130,9 @@ class WordViewModel(
                                 )) {
                                     is Result.Error -> {
                                         // TODO - send error event
+                                        // tODO - sync history later with worker
                                     }
-                                    is Result.Success -> {
-                                        // TODO - optionally send event
-                                        Unit
-                                    }
+                                    is Result.Success -> Unit
                                 }
                             }
                             state = state.copy(
