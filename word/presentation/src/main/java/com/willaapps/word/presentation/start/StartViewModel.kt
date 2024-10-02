@@ -16,13 +16,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class StartViewModel(
-    private val localWordDataSource: LocalWordDataSource,
-    private val previousWordStorage: PreviousWordStorage,
+    localWordDataSource: LocalWordDataSource,
+    previousWordStorage: PreviousWordStorage,
     private val userInfoRepository: UserInfoRepository,
-    private val userStorage: UserStorage,
+    userStorage: UserStorage,
     private val sessionStorage: SessionStorage
 ) : ViewModel() {
 
+    // TODO - check userInfo fetching and syncing
     var state by mutableStateOf(StartState())
         private set
 
