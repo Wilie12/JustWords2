@@ -22,6 +22,7 @@ val databaseModule = module {
 
     single { get<WordDatabase>().wordDao }
     single { get<WordDatabase>().userDao }
+    single { get<WordDatabase>().historyPendingSyncDao }
 
     singleOf(::RoomLocalWordDataSource).bind<LocalWordDataSource>()
     singleOf(::RoomLocalWordHistoryDataSource).bind<LocalWordHistoryDataSource>()

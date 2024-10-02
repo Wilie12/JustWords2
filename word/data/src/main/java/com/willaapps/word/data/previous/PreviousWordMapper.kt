@@ -1,4 +1,4 @@
-package com.willaapps.word.data
+package com.willaapps.word.data.previous
 
 import com.willaapps.word.domain.PreviousWord
 

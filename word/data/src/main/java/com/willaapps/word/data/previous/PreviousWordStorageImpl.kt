@@ -1,4 +1,4 @@
-package com.willaapps.word.data
+package com.willaapps.word.data.previous
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
