@@ -13,6 +13,6 @@ interface HistoryPendingSyncDao {
     suspend fun getHistoryPendingSyncEntity(userId: String): HistoryPendingSyncEntity?
     @Upsert
     suspend fun upsertHistoryPendingSyncEntity(entity: HistoryPendingSyncEntity)
-    @Query("DELETE FROM HistoryPendingSyncEntity WHERE userId = :userId")
-    suspend fun deleteHistoryPendingSyncEntity(userId: String)
+    @Query("DELETE FROM HistoryPendingSyncEntity WHERE id = :id")
+    suspend fun deleteHistoryPendingSyncEntity(id: String)
 }

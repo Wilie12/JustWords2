@@ -8,5 +8,6 @@ interface WordHistoryRepository {
     fun getHistoryItems(): Flow<List<WordHistory>>
     suspend fun fetchHistoryItems(): EmptyResult<DataError>
     suspend fun insertHistoryItem(wordHistory: WordHistory): EmptyResult<DataError>
+    suspend fun syncPendingHistory()
     suspend fun deleteAllHistoryItems()
 }
