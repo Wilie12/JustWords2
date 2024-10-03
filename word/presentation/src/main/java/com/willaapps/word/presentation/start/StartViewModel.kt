@@ -8,19 +8,25 @@ import androidx.lifecycle.viewModelScope
 import com.willaapps.core.domain.auth.SessionStorage
 import com.willaapps.core.domain.user.UserInfoRepository
 import com.willaapps.core.domain.user.UserStorage
+import com.willaapps.core.domain.user.history.SyncHistoryScheduler
+import com.willaapps.core.domain.user.history.WordHistoryRepository
 import com.willaapps.core.domain.word.LocalWordDataSource
 import com.willaapps.word.domain.PreviousWordStorage
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.minutes
 
 class StartViewModel(
     localWordDataSource: LocalWordDataSource,
     previousWordStorage: PreviousWordStorage,
-    private val userInfoRepository: UserInfoRepository,
     userStorage: UserStorage,
-    private val sessionStorage: SessionStorage
+    private val userInfoRepository: UserInfoRepository,
+    private val sessionStorage: SessionStorage,
+    private val syncHistoryScheduler: SyncHistoryScheduler,
+    private val wordHistoryRepository: WordHistoryRepository
+
 ) : ViewModel() {
 
     // TODO - check userInfo fetching and syncing
@@ -31,6 +37,13 @@ class StartViewModel(
         state = state.copy(isLoading = true)
 
         viewModelScope.launch {
+            syncHistoryScheduler.scheduleSync(
+                type = SyncHistoryScheduler.SyncType.FetchHistoryItems(30.minutes)
+            )
+        }
+
+        viewModelScope.launch {
+            wordHistoryRepository.syncPendingHistory()
             userInfoRepository.getUserInfo(
                 userId = sessionStorage.get()?.userId ?: ""
             )

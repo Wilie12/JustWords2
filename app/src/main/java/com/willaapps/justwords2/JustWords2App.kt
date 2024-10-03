@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
@@ -32,6 +33,7 @@ class JustWords2App: Application() {
         startKoin {
             androidLogger()
             androidContext(this@JustWords2App)
+            workManagerFactory()
             modules(
                 appModule,
                 authDataModule,
