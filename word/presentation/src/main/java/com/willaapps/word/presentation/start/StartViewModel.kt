@@ -29,7 +29,6 @@ class StartViewModel(
 
 ) : ViewModel() {
 
-    // TODO - check userInfo fetching and syncing
     var state by mutableStateOf(StartState())
         private set
 

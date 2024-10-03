@@ -51,7 +51,8 @@ fun JwTextField(
     title: String?,
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
-    additionalInfo: String? = null
+    additionalInfo: String? = null,
+    readOnly: Boolean = false
 ) {
     var isFocused by remember {
         mutableStateOf(false)
@@ -93,6 +94,7 @@ fun JwTextField(
             ),
             lineLimits = TextFieldLineLimits.SingleLine,
             cursorBrush = SolidColor(Color(0xFF121211)),
+            readOnly = readOnly,
             modifier = Modifier
                 .clip(RoundedCornerShape(100f))
                 .background(

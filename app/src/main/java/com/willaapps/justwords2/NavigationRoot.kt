@@ -13,6 +13,7 @@ import com.willaapps.auth.presentation.login.LoginScreenRoot
 import com.willaapps.auth.presentation.register.RegisterScreenRoot
 import com.willaapps.shop.presentation.shop_book.ShopScreenRoot
 import com.willaapps.shop.presentation.shop_set.ShopSetScreenRoot
+import com.willaapps.user.presentation.edit_profile.EditProfileScreenRoot
 import com.willaapps.user.presentation.profile.ProfileScreenRoot
 import com.willaapps.word.presentation.set_list.SetListScreenRoot
 import com.willaapps.word.presentation.start.StartScreenRoot
@@ -199,8 +200,13 @@ private fun NavGraphBuilder.userGraph(navController: NavHostController) {
         composable("profile") {
             ProfileScreenRoot(
                 onBackClick = { navController.navigateUp() },
-                onEditProfileClick = { /*TODO*/ },
+                onEditProfileClick = { navController.navigate("editProfile") },
                 onLogoutClick = { /*TODO*/ })
+        }
+        composable("editProfile") {
+            EditProfileScreenRoot(
+                onNavigateBack = { navController.navigateUp() }
+            )
         }
     }
 }

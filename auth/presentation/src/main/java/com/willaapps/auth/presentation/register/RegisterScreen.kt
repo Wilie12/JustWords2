@@ -116,6 +116,7 @@ fun RegisterScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .systemBarsPadding()
+                    .padding(16.dp)
             )
             Column(
                 modifier = Modifier

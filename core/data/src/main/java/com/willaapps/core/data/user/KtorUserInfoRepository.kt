@@ -40,7 +40,6 @@ class KtorUserInfoRepository(
                                             .withZoneSameInstant(ZoneId.of("UTC"))
                                     )
                             ) {
-                                // TODO - optionally consider adding worker to sync later
                                 setUserInfo(userInfo)
                                 return@collect
                             }
