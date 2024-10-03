@@ -16,7 +16,6 @@ import java.time.ZonedDateTime
 class UserStorageImpl(
     private val dataStore: DataStore<Preferences>
 ) : UserStorage {
-    // TODO - create worker to sync data later if no server connection
     override fun get(): Flow<UserInfo?> {
         return dataStore.data.map { preferences ->
             val userInfo = try {

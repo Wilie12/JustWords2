@@ -14,7 +14,6 @@ import androidx.lifecycle.viewModelScope
 import com.willaapps.core.domain.user.UserStorage
 import com.willaapps.core.domain.user.history.WordHistory
 import com.willaapps.core.domain.user.history.WordHistoryRepository
-import com.willaapps.core.domain.util.Result
 import com.willaapps.core.domain.word.LocalWordDataSource
 import com.willaapps.word.domain.PreviousWord
 import com.willaapps.word.domain.PreviousWordStorage
@@ -26,7 +25,7 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 
 class WordViewModel(
-    private val localWordDataSource: LocalWordDataSource,
+    localWordDataSource: LocalWordDataSource,
     private val savedStateHandle: SavedStateHandle,
     private val previousWordStorage: PreviousWordStorage,
     private val userStorage: UserStorage,
@@ -115,7 +114,7 @@ class WordViewModel(
                                         groupNumber = checkNotNull(savedStateHandle["groupNumber"])
                                     )
                                 )
-                                when (val result = wordHistoryRepository.insertHistoryItem(
+                                wordHistoryRepository.insertHistoryItem(
                                     wordHistory = WordHistory(
                                         bookName = state.book.name,
                                         bookColor = state.book.color,
@@ -127,13 +126,7 @@ class WordViewModel(
                                         wordListSize = state.wordsNumber,
                                         id = null
                                     )
-                                )) {
-                                    is Result.Error -> {
-                                        // TODO - send error event
-                                        // tODO - sync history later with worker
-                                    }
-                                    is Result.Success -> Unit
-                                }
+                                )
                             }
                             state = state.copy(
                                 buttonOption = ButtonOption.BUTTON_FINISH
@@ -141,11 +134,9 @@ class WordViewModel(
                         }
                         state.answer.clearText()
                     }
-
                     else -> Unit
                 }
             }
-
             else -> Unit
         }
     }

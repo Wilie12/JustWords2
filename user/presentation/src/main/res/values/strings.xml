@@ -15,4 +15,11 @@
     <string name="yesterday">Yesterday</string>
     <string name="weekly">Weekly</string>
     <string name="nothing_to_display_play_now">Nothing to display, play now.</string>
+    <string name="enter_new_username">Enter new username</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="enter_new_daily_goal">Enter new daily goal</string>
+    <string name="daily_goal">Daily goal</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>
