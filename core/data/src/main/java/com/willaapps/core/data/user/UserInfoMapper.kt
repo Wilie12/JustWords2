@@ -10,6 +10,7 @@ fun UserInfo.toUserInfoSerializable(): UserInfoSerializable {
         bestStreak = bestStreak,
         dailyGoal = dailyGoal,
         lastPlayedTimestamp = lastPlayedTimestamp.toInstant().toString(),
+        lastEditedTimestamp = lastEditedTimestamp.toInstant().toString(),
         currentGoal = currentGoal,
         username = username,
         userId = userId
@@ -22,6 +23,8 @@ fun UserInfoSerializable.toUserInfo(): UserInfo {
         bestStreak = bestStreak,
         dailyGoal = dailyGoal,
         lastPlayedTimestamp = Instant.parse(lastPlayedTimestamp)
+            .atZone(ZoneId.of("UTC")),
+        lastEditedTimestamp = Instant.parse(lastEditedTimestamp)
             .atZone(ZoneId.of("UTC")),
         currentGoal = currentGoal,
         username = username,

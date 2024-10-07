@@ -1,6 +1,6 @@
 package com.willaapps.user.presentation.profile
 
-import com.willaapps.user.presentation.profile.util.ProfileMode
+import com.willaapps.user.domain.profile.ProfileMode
 
 sealed interface ProfileAction {
     data object OnBackClick: ProfileAction

@@ -2,6 +2,7 @@ package com.willaapps.user.presentation.profile.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.willaapps.user.domain.profile.ProfileMode
 import com.willaapps.user.presentation.R
 
 @Composable

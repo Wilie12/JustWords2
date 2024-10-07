@@ -2,6 +2,7 @@ package com.willaapps.user.presentation.profile.util
 
 import androidx.compose.runtime.Composable
 import com.willaapps.core.domain.user.history.WordHistory
+import com.willaapps.user.domain.profile.ProfileLevel
 
 @Composable
 fun profileLevelToString(profileLevel: ProfileLevel): String {

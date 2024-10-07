@@ -53,8 +53,8 @@ import com.willaapps.user.presentation.profile.components.DailyGraph
 import com.willaapps.user.presentation.profile.components.SummaryItem
 import com.willaapps.user.presentation.profile.components.WeeklyGraph
 import com.willaapps.user.presentation.profile.components.WordHistoryItem
-import com.willaapps.user.presentation.profile.util.ProfileLevel
-import com.willaapps.user.presentation.profile.util.ProfileMode
+import com.willaapps.user.domain.profile.ProfileLevel
+import com.willaapps.user.domain.profile.ProfileMode
 import com.willaapps.user.presentation.profile.util.profileLevelToString
 import com.willaapps.user.presentation.profile.util.profileModeToString
 import org.koin.androidx.compose.koinViewModel
@@ -263,27 +263,24 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(8.dp))
                 // TODO - animation when changing modes
                 if (!state.isLoading) {
-                    if (state.historyItems.isEmpty()) {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = stringResource(R.string.nothing_to_display_play_now),
-                                fontSize = 16.sp,
-                                color = Color(0xFF5E5E5E)
-                            )
-                        }
-                    } else {
-                        when (state.profileMode) {
-                            ProfileMode.HISTORY_MODE -> {
+                    when (state.profileMode) {
+                        ProfileMode.HISTORY_MODE -> {
+                            if (state.historyItems.isEmpty()) {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = stringResource(R.string.nothing_to_display_play_now),
+                                        fontSize = 16.sp,
+                                        color = Color(0xFF5E5E5E)
+                                    )
+                                }
+                            } else {
                                 LazyColumn(
                                     reverseLayout = true,
                                     state = rememberLazyListState(
-                                        initialFirstVisibleItemIndex =
-                                        if (state.historyItems.isNotEmpty()) {
-                                            state.historyItems.lastIndex
-                                        } else 0
+                                        initialFirstVisibleItemIndex = state.historyItems.lastIndex
                                     ),
                                     verticalArrangement = Arrangement.spacedBy(8.dp),
                                     modifier = Modifier
@@ -301,65 +298,65 @@ fun ProfileScreen(
                                     }
                                 }
                             }
-                            ProfileMode.STATS_MODE -> {
-                                Column(
-                                    modifier = Modifier
+                        }
+                        ProfileMode.STATS_MODE -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .verticalScroll(rememberScrollState())
+                            ) {
+                                if (state.todayPlays.isNotEmpty() || state.yesterdayPlays.isNotEmpty()) {
+                                    DailyGraph(
+                                        todayPlays = state.todayPlays,
+                                        yesterdayPlays = state.yesterdayPlays,
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                } else {
+                                    Box(modifier = Modifier
                                         .fillMaxWidth()
-                                        .verticalScroll(rememberScrollState())
-                                ) {
-                                    if (state.todayPlays.isNotEmpty() || state.yesterdayPlays.isNotEmpty()) {
-                                        DailyGraph(
-                                            todayPlays = state.todayPlays,
-                                            yesterdayPlays = state.yesterdayPlays,
-                                            modifier = Modifier.fillMaxWidth()
+                                        .aspectRatio(2f),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = stringResource(R.string.daily),
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            color = Color(0xFF121211),
+                                            modifier = Modifier.align(Alignment.TopStart)
                                         )
-                                    } else {
-                                        Box(modifier = Modifier
-                                            .fillMaxWidth()
-                                            .aspectRatio(2f),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            Text(
-                                                text = stringResource(R.string.daily),
-                                                fontSize = 16.sp,
-                                                fontWeight = FontWeight.Medium,
-                                                color = Color(0xFF121211),
-                                                modifier = Modifier.align(Alignment.TopStart)
-                                            )
-                                            Text(
-                                                text = stringResource(R.string.nothing_to_display_play_now),
-                                                fontSize = 16.sp,
-                                                color = Color(0xFF5E5E5E),
-                                                modifier = Modifier.align(Alignment.Center)
-                                            )
-                                        }
+                                        Text(
+                                            text = stringResource(R.string.nothing_to_display_play_now),
+                                            fontSize = 16.sp,
+                                            color = Color(0xFF5E5E5E),
+                                            modifier = Modifier.align(Alignment.Center)
+                                        )
                                     }
-                                    Spacer(modifier = Modifier.height(8.dp))
-                                    if (state.weeklyPlays.isNotEmpty()) {
-                                        WeeklyGraph(
-                                            weeklyPlays = state.weeklyPlays,
-                                            today = state.today
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
+                                if (state.weeklyPlays.isNotEmpty()) {
+                                    WeeklyGraph(
+                                        weeklyPlays = state.weeklyPlays,
+                                        today = state.today
+                                    )
+                                } else {
+                                    Box(modifier = Modifier
+                                        .fillMaxWidth()
+                                        .aspectRatio(2f),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = stringResource(R.string.weekly),
+                                            fontSize = 16.sp,
+                                            fontWeight = FontWeight.Medium,
+                                            color = Color(0xFF121211),
+                                            modifier = Modifier.align(Alignment.TopStart)
                                         )
-                                    } else {
-                                        Box(modifier = Modifier
-                                            .fillMaxWidth()
-                                            .aspectRatio(2f),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            Text(
-                                                text = stringResource(R.string.weekly),
-                                                fontSize = 16.sp,
-                                                fontWeight = FontWeight.Medium,
-                                                color = Color(0xFF121211),
-                                                modifier = Modifier.align(Alignment.TopStart)
-                                            )
-                                            Text(
-                                                text = stringResource(R.string.nothing_to_display_play_now),
-                                                fontSize = 16.sp,
-                                                color = Color(0xFF5E5E5E),
-                                                modifier = Modifier.align(Alignment.Center)
-                                            )
-                                        }
+                                        Text(
+                                            text = stringResource(R.string.nothing_to_display_play_now),
+                                            fontSize = 16.sp,
+                                            color = Color(0xFF5E5E5E),
+                                            modifier = Modifier.align(Alignment.Center)
+                                        )
                                     }
                                 }
                             }

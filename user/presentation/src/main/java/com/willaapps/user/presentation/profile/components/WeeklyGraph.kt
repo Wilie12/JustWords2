@@ -36,8 +36,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.willaapps.core.presentation.designsystem.JustWords2Theme
+import com.willaapps.user.domain.profile.WeeklyGraphItem
 import com.willaapps.user.presentation.R
-import com.willaapps.user.presentation.profile.util.WeeklyGraphItem
 import com.willaapps.user.presentation.profile.util.calculateValuesBetween
 
 @Composable
