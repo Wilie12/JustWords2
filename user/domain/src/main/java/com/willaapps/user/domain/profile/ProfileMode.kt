@@ -1,4 +1,4 @@
-package com.willaapps.user.presentation.profile.util
+package com.willaapps.user.domain.profile
 
 enum class ProfileMode {
     HISTORY_MODE,

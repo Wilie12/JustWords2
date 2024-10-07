@@ -41,19 +41,6 @@ class UserStorageImpl(
         }
     }
 
-    override suspend fun updateUsername(username: String) {
-        dataStore.edit { preferences ->
-            val currentUserInfo = Json
-                .decodeFromString<UserInfoSerializable>(
-                    preferences[KEY_USER_INFO] ?: return@edit
-                )
-            val newUserInfo = currentUserInfo.copy(
-                username = username
-            )
-            preferences[KEY_USER_INFO] = Json.encodeToString(newUserInfo)
-        }
-    }
-
     override suspend fun setIncreasedDailyGoal() {
         dataStore.edit { preferences ->
             val currentUserInfo = Json
@@ -65,19 +52,6 @@ class UserStorageImpl(
             val newUserInfo = increaseDailyGoal(currentUserInfo)
 
             preferences[KEY_USER_INFO] = Json.encodeToString(newUserInfo.toUserInfoSerializable())
-        }
-    }
-
-    override suspend fun updateDailyGoal(newGoal: Int) {
-        dataStore.edit { preferences ->
-            val currentUserInfo = Json
-                .decodeFromString<UserInfoSerializable>(
-                    preferences[KEY_USER_INFO] ?: return@edit
-                )
-            val newUserInfo = currentUserInfo.copy(
-                dailyGoal = newGoal
-            )
-            preferences[KEY_USER_INFO] = Json.encodeToString(newUserInfo)
         }
     }
 

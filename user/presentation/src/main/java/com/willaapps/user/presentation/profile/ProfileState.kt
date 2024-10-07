@@ -1,10 +1,10 @@
 package com.willaapps.user.presentation.profile
 
 import com.willaapps.core.domain.user.history.WordHistory
-import com.willaapps.user.presentation.profile.util.DailyGraphItem
-import com.willaapps.user.presentation.profile.util.ProfileLevel
-import com.willaapps.user.presentation.profile.util.ProfileMode
-import com.willaapps.user.presentation.profile.util.WeeklyGraphItem
+import com.willaapps.user.domain.profile.DailyGraphItem
+import com.willaapps.user.domain.profile.ProfileLevel
+import com.willaapps.user.domain.profile.ProfileMode
+import com.willaapps.user.domain.profile.WeeklyGraphItem
 import java.time.ZoneId
 import java.time.ZonedDateTime
 

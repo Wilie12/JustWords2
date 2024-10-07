@@ -39,6 +39,12 @@ class KtorUserInfoRepository(
                                         userInfo.lastPlayedTimestamp
                                             .withZoneSameInstant(ZoneId.of("UTC"))
                                     )
+                                || result.data.userInfo.toUserInfo().lastEditedTimestamp
+                                    .withZoneSameInstant(ZoneId.of("UTC")).isBefore(
+                                        userInfo.lastEditedTimestamp
+                                            .withZoneSameInstant(ZoneId.of("UTC"))
+                                    )
+
                             ) {
                                 setUserInfo(userInfo)
                                 return@collect
@@ -46,6 +52,11 @@ class KtorUserInfoRepository(
                             if (result.data.userInfo.toUserInfo().lastPlayedTimestamp
                                     .withZoneSameInstant(ZoneId.of("UTC")).isEqual(
                                         userInfo.lastPlayedTimestamp
+                                            .withZoneSameInstant(ZoneId.of("UTC"))
+                                    )
+                                || result.data.userInfo.toUserInfo().lastEditedTimestamp
+                                    .withZoneSameInstant(ZoneId.of("UTC")).isEqual(
+                                        userInfo.lastEditedTimestamp
                                             .withZoneSameInstant(ZoneId.of("UTC"))
                                     )
                             ) {

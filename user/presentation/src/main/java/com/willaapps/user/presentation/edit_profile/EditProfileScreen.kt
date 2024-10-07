@@ -3,6 +3,7 @@
 
 package com.willaapps.user.presentation.edit_profile
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +32,7 @@ import com.willaapps.core.presentation.designsystem.components.GradientBall
 import com.willaapps.core.presentation.designsystem.components.JwTextField
 import com.willaapps.core.presentation.designsystem.components.JwToolbar
 import com.willaapps.core.presentation.designsystem.components.OutlinedActionButton
+import com.willaapps.core.presentation.ui.ObserveAsEvents
 import com.willaapps.user.presentation.R
 import org.koin.androidx.compose.koinViewModel
 
@@ -39,6 +42,17 @@ fun EditProfileScreenRoot(
     onNavigateBack: () -> Unit,
     viewModel: EditProfileViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
+
+    ObserveAsEvents(flow = viewModel.eventChannel) {
+        Toast.makeText(
+            context,
+            context.getString(R.string.profile_edited_successfully),
+            Toast.LENGTH_LONG
+        ).show()
+        onNavigateBack()
+    }
+
     EditProfileScreen(
         state = viewModel.state,
         onAction = { action ->
@@ -90,14 +104,6 @@ fun EditProfileScreen(
                     endIcon = if (state.isValidUsername) CheckIcon else null,
                     hint = stringResource(R.string.enter_new_username),
                     title = stringResource(R.string.username)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                JwTextField(
-                    state = state.email,
-                    endIcon = null,
-                    hint = "",
-                    title = stringResource(R.string.email),
-                    readOnly = true
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 JwTextField(
