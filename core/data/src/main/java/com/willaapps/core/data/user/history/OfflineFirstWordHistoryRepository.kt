@@ -12,6 +12,10 @@ import com.willaapps.core.domain.util.DataError
 import com.willaapps.core.domain.util.EmptyResult
 import com.willaapps.core.domain.util.Result
 import com.willaapps.core.domain.util.asEmptyDataResult
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerAuthProvider
+import io.ktor.client.plugins.plugin
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -25,7 +29,8 @@ class OfflineFirstWordHistoryRepository(
     private val applicationScope: CoroutineScope,
     private val syncHistoryScheduler: SyncHistoryScheduler,
     private val sessionStorage: SessionStorage,
-    private val historyPendingSyncDao: HistoryPendingSyncDao
+    private val historyPendingSyncDao: HistoryPendingSyncDao,
+    private val client: HttpClient
 ): WordHistoryRepository {
     override fun getHistoryItems(): Flow<List<WordHistory>> {
         return localWordHistoryDataSource.getHistoryItems()
@@ -100,5 +105,11 @@ class OfflineFirstWordHistoryRepository(
 
     override suspend fun deleteAllHistoryItems() {
         localWordHistoryDataSource.deleteAllHistoryItems()
+    }
+
+    override suspend fun logout() {
+        client.plugin(Auth).providers.filterIsInstance<BearerAuthProvider>()
+            .firstOrNull()
+            ?.clearToken()
     }
 }

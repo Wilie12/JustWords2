@@ -17,6 +17,7 @@ import com.willaapps.core.domain.util.DataError
 import com.willaapps.core.domain.util.Result
 import com.willaapps.core.presentation.ui.UiText
 import com.willaapps.core.presentation.ui.asUiText
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
@@ -56,10 +57,12 @@ class LoginViewModel(
     private fun login() {
         viewModelScope.launch {
             state = state.copy(isLoggingIn = true)
-            val result = authRepository.login(
-                email = state.email.text.toString().trim(),
-                password = state.password.text.toString()
-            )
+            val result = async {
+                authRepository.login(
+                    email = state.email.text.toString().trim(),
+                    password = state.password.text.toString()
+                )
+            }.await()
             state = state.copy(isLoggingIn = false)
 
             when (result) {

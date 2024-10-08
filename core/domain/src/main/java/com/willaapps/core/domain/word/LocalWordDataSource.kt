@@ -13,4 +13,5 @@ interface LocalWordDataSource {
     suspend fun insertWords(words: List<Word>): Result<List<String>, DataError.Local>
     suspend fun insertWordSet(wordSet: WordSet): Result<String, DataError.Local>
     suspend fun insertBook(book: Book): Result<String, DataError.Local>
+    suspend fun deleteAll()
 }

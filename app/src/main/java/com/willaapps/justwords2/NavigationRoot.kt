@@ -201,7 +201,14 @@ private fun NavGraphBuilder.userGraph(navController: NavHostController) {
             ProfileScreenRoot(
                 onBackClick = { navController.navigateUp() },
                 onEditProfileClick = { navController.navigate("editProfile") },
-                onLogoutClick = { /*TODO*/ })
+                onLogout = {
+                    navController.navigate("auth") {
+                        popUpTo("word") {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
         composable("editProfile") {
             EditProfileScreenRoot(

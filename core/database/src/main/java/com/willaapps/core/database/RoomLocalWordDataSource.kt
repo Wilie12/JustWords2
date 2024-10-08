@@ -72,4 +72,10 @@ class RoomLocalWordDataSource(
             Result.Error(DataError.Local.DISK_FULL)
         }
     }
+
+    override suspend fun deleteAll() {
+        wordDao.deleteAllWords()
+        wordDao.deleteAllSets()
+        wordDao.deleteAllBooks()
+    }
 }
