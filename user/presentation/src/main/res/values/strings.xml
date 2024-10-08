@@ -23,4 +23,7 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="profile_edited_successfully">Profile edited successfully!</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="you_are_trying_to_logout_all_data_that_wasn_t_sync_with_internet_can_be_lost">You are trying to logout. All data that wasn\'t sync with internet can be lost.</string>
+    <string name="you_have_logout_successfully">You have logout successfully!</string>
 </resources>

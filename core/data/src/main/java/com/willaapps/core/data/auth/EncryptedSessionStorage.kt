@@ -22,19 +22,17 @@ class EncryptedSessionStorage(
     }
 
     override suspend fun set(info: AuthInfo?) {
-        withContext(Dispatchers.IO) {
-            if (info == null) {
-                sharedPreferences.edit().remove(KEY_AUTH_INFO).commit()
-                return@withContext
-            }
-
-            val json = Json.encodeToString(info.toAuthInfoSerializable())
-
-            sharedPreferences
-                .edit()
-                .putString(KEY_AUTH_INFO, json)
-                .commit()
+        if (info == null) {
+            sharedPreferences.edit().remove(KEY_AUTH_INFO).commit()
+            return
         }
+
+        val json = Json.encodeToString(info.toAuthInfoSerializable())
+
+        sharedPreferences
+            .edit()
+            .putString(KEY_AUTH_INFO, json)
+            .commit()
     }
 
     companion object {

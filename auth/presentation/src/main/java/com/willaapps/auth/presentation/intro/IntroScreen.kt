@@ -42,7 +42,7 @@ import com.willaapps.core.presentation.designsystem.components.OutlinedActionBut
 @Composable
 fun IntroScreenRoot(
     onSignInClick: () -> Unit,
-    onSignUpClick: () -> Unit
+    onSignUpClick: () -> Unit,
 ) {
     IntroScreen(
         onAction = { action ->

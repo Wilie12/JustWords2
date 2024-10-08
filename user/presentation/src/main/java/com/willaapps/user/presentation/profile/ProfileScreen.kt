@@ -1,5 +1,6 @@
 package com.willaapps.user.presentation.profile
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -48,13 +50,14 @@ import com.willaapps.core.presentation.designsystem.components.ActionButton
 import com.willaapps.core.presentation.designsystem.components.GradientBall
 import com.willaapps.core.presentation.designsystem.components.JwToolbar
 import com.willaapps.core.presentation.designsystem.components.OutlinedActionButton
+import com.willaapps.core.presentation.ui.ObserveAsEvents
 import com.willaapps.user.presentation.R
 import com.willaapps.user.presentation.profile.components.DailyGraph
 import com.willaapps.user.presentation.profile.components.SummaryItem
 import com.willaapps.user.presentation.profile.components.WeeklyGraph
 import com.willaapps.user.presentation.profile.components.WordHistoryItem
-import com.willaapps.user.domain.profile.ProfileLevel
 import com.willaapps.user.domain.profile.ProfileMode
+import com.willaapps.user.presentation.profile.components.LogoutDialog
 import com.willaapps.user.presentation.profile.util.profileLevelToString
 import com.willaapps.user.presentation.profile.util.profileModeToString
 import org.koin.androidx.compose.koinViewModel
@@ -63,16 +66,26 @@ import org.koin.androidx.compose.koinViewModel
 fun ProfileScreenRoot(
     onBackClick: () -> Unit,
     onEditProfileClick: () -> Unit,
-    onLogoutClick: () -> Unit,
+    onLogout: () -> Unit,
     viewModel: ProfileViewModel = koinViewModel()
 ) {
+    val context = LocalContext.current
+
+    ObserveAsEvents(flow = viewModel.eventChannel) {
+        Toast.makeText(
+            context,
+            context.getString(R.string.you_have_logout_successfully),
+            Toast.LENGTH_LONG
+        ).show()
+        onLogout()
+    }
+
     ProfileScreen(
         state = viewModel.state,
         onAction = { action ->
             when (action) {
                 ProfileAction.OnBackClick -> onBackClick()
                 ProfileAction.OnEditProfileClick -> onEditProfileClick()
-                ProfileAction.OnLogoutClick -> onLogoutClick()
                 else -> Unit
             }
             viewModel.onAction(action)
@@ -299,22 +312,24 @@ fun ProfileScreen(
                                 }
                             }
                         }
+
                         ProfileMode.STATS_MODE -> {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .verticalScroll(rememberScrollState())
                             ) {
-                                if (state.todayPlays.isNotEmpty() || state.yesterdayPlays.isNotEmpty()) {
+                                if (state.graphData.todayPlays.isNotEmpty() || state.graphData.yesterdayPlays.isNotEmpty()) {
                                     DailyGraph(
-                                        todayPlays = state.todayPlays,
-                                        yesterdayPlays = state.yesterdayPlays,
+                                        todayPlays = state.graphData.todayPlays,
+                                        yesterdayPlays = state.graphData.yesterdayPlays,
                                         modifier = Modifier.fillMaxWidth()
                                     )
                                 } else {
-                                    Box(modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(2f),
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .aspectRatio(2f),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
@@ -333,15 +348,16 @@ fun ProfileScreen(
                                     }
                                 }
                                 Spacer(modifier = Modifier.height(8.dp))
-                                if (state.weeklyPlays.isNotEmpty()) {
+                                if (state.graphData.weeklyPlays.isNotEmpty()) {
                                     WeeklyGraph(
-                                        weeklyPlays = state.weeklyPlays,
-                                        today = state.today
+                                        weeklyPlays = state.graphData.weeklyPlays,
+                                        today = state.graphData.today
                                     )
                                 } else {
-                                    Box(modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(2f),
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .aspectRatio(2f),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
@@ -373,6 +389,17 @@ fun ProfileScreen(
             }
         }
     }
+
+    if (state.showDialog) {
+        LogoutDialog(
+            onDismiss = {
+                onAction(ProfileAction.OnLogoutDismiss)
+            },
+            onConfirm = {
+                onAction(ProfileAction.OnLogoutConfirm)
+            }
+        )
+    }
 }
 
 @Preview
@@ -382,10 +409,8 @@ private fun ProfileScreenPreview() {
         ProfileScreen(
             state = ProfileState(
                 username = "JohnDoe87",
-                gamesCompleted = 123,
                 dailyStreak = 7,
                 bestStreak = 7,
-                level = ProfileLevel.ADVANCED,
                 historyItems = emptyList(),
             ),
             onAction = {}

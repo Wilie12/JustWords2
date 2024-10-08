@@ -40,4 +40,11 @@ interface WordDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertBook(bookEntity: BookEntity)
+
+    @Query("DELETE FROM WordEntity")
+    suspend fun deleteAllWords()
+    @Query("DELETE FROM BookEntity")
+    suspend fun deleteAllBooks()
+    @Query("DELETE FROM SetEntity")
+    suspend fun deleteAllSets()
 }

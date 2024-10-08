@@ -26,10 +26,12 @@ class UserStorageImpl(
                 null
             }
 
-            userInfo?.let { setUserInfo(resetDailyIfNecessary(it)) }
+            userInfo?.let { resetDailyIfNecessary(it) }
 
-            preferences[KEY_USER_INFO]?.let {
-                Json.decodeFromString<UserInfoSerializable>(it).toUserInfo()
+            try {
+                Json.decodeFromString<UserInfoSerializable>(preferences[KEY_USER_INFO] ?: "").toUserInfo()
+            } catch (e: Exception) {
+                null
             }
         }
     }
@@ -56,12 +58,16 @@ class UserStorageImpl(
     }
 
     override suspend fun clearUserInfo() {
+        // TODO - dataStore not clearing data
         dataStore.edit { preferences ->
             preferences.remove(KEY_USER_INFO)
+            preferences.clear()
+            preferences[KEY_USER_INFO] = ""
         }
     }
 
-    private fun resetDailyIfNecessary(userInfo: UserInfo): UserInfo {
+    private suspend fun resetDailyIfNecessary(userInfo: UserInfo) {
+        // TODO - encapsulate
         val lastDayPlayed = userInfo.lastPlayedTimestamp
             .withZoneSameInstant(ZoneId.of("UTC"))?.dayOfMonth
         val nextDayAfterPlay = userInfo.lastPlayedTimestamp
@@ -74,11 +80,18 @@ class UserStorageImpl(
         } else {
             0
         }
+        val newCurrentGoal = if (today != lastDayPlayed) 0 else userInfo.currentGoal
 
-        return userInfo.copy(
+        if (newCurrentGoal == userInfo.currentGoal && newDailyStreak == userInfo.dailyStreak) {
+            return
+        }
+
+        val newUserInfo = userInfo.copy(
             dailyStreak = newDailyStreak,
-            currentGoal = if (today != lastDayPlayed) 0 else userInfo.currentGoal
+            currentGoal = newCurrentGoal
         )
+
+        setUserInfo(newUserInfo)
     }
 
     private fun increaseDailyGoal(userInfo: UserInfo): UserInfo {

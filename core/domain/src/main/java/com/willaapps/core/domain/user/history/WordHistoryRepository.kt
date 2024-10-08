@@ -10,4 +10,5 @@ interface WordHistoryRepository {
     suspend fun insertHistoryItem(wordHistory: WordHistory): EmptyResult<DataError>
     suspend fun syncPendingHistory()
     suspend fun deleteAllHistoryItems()
+    suspend fun logout()
 }

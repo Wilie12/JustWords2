@@ -2,6 +2,7 @@ package com.willaapps.core.data.user
 
 import com.willaapps.core.data.networking.get
 import com.willaapps.core.data.networking.post
+import com.willaapps.core.domain.auth.SessionStorage
 import com.willaapps.core.domain.user.UserInfo
 import com.willaapps.core.domain.user.UserInfoRepository
 import com.willaapps.core.domain.user.UserStorage
@@ -16,7 +17,8 @@ import java.time.ZoneId
 
 class KtorUserInfoRepository(
     private val httpClient: HttpClient,
-    private val userStorage: UserStorage
+    private val userStorage: UserStorage,
+    private val sessionStorage: SessionStorage
 ) : UserInfoRepository {
     override suspend fun getUserInfo(userId: String): EmptyResult<DataError.Network> {
         val result = httpClient.get<UserInfoResponse>(
@@ -34,31 +36,36 @@ class KtorUserInfoRepository(
                     }
                     .collect { userInfo ->
                         if (userInfo != null) {
-                            if (result.data.userInfo.toUserInfo().lastPlayedTimestamp
+                            // TODO - find better solution
+                            if (userInfo.userId != sessionStorage.get()?.userId) {
+                                userStorage.setUserInfo(result.data.userInfo.toUserInfo())
+                                return@collect
+                            }
+                            if ((result.data.userInfo.toUserInfo().lastPlayedTimestamp
                                     .withZoneSameInstant(ZoneId.of("UTC")).isBefore(
                                         userInfo.lastPlayedTimestamp
                                             .withZoneSameInstant(ZoneId.of("UTC"))
-                                    )
-                                || result.data.userInfo.toUserInfo().lastEditedTimestamp
+                                    ))
+                                || (result.data.userInfo.toUserInfo().lastEditedTimestamp
                                     .withZoneSameInstant(ZoneId.of("UTC")).isBefore(
                                         userInfo.lastEditedTimestamp
                                             .withZoneSameInstant(ZoneId.of("UTC"))
-                                    )
+                                    ))
 
                             ) {
                                 setUserInfo(userInfo)
                                 return@collect
                             }
-                            if (result.data.userInfo.toUserInfo().lastPlayedTimestamp
+                            if ((result.data.userInfo.toUserInfo().lastPlayedTimestamp
                                     .withZoneSameInstant(ZoneId.of("UTC")).isEqual(
                                         userInfo.lastPlayedTimestamp
                                             .withZoneSameInstant(ZoneId.of("UTC"))
-                                    )
-                                || result.data.userInfo.toUserInfo().lastEditedTimestamp
+                                    ))
+                                || (result.data.userInfo.toUserInfo().lastEditedTimestamp
                                     .withZoneSameInstant(ZoneId.of("UTC")).isEqual(
                                         userInfo.lastEditedTimestamp
                                             .withZoneSameInstant(ZoneId.of("UTC"))
-                                    )
+                                    ))
                             ) {
                                 return@collect
                             }
@@ -66,10 +73,8 @@ class KtorUserInfoRepository(
                         userStorage.setUserInfo(result.data.userInfo.toUserInfo())
                     }
             }
-
             else -> Unit
         }
-
         return result.asEmptyDataResult()
     }
 

@@ -38,7 +38,6 @@ class AuthRepositoryImpl(
                 password = password
             )
         )
-
         if (result is Result.Success) {
             sessionStorage.set(
                 AuthInfo(
