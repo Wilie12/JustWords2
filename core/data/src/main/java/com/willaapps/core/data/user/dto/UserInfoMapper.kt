@@ -1,4 +1,4 @@
-package com.willaapps.core.data.user
+package com.willaapps.core.data.user.dto
 
 import com.willaapps.core.domain.user.UserInfo
 import java.time.Instant

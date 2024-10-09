@@ -33,7 +33,6 @@ class ProfileViewModel(
     private val sessionStorage: SessionStorage,
     private val localWordDataSource: LocalWordDataSource
 ) : ViewModel() {
-    // TODO - logout
     var state by mutableStateOf(ProfileState())
         private set
 

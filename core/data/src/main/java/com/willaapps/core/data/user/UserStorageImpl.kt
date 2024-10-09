@@ -4,6 +4,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.willaapps.core.data.user.dto.UserInfoSerializable
+import com.willaapps.core.data.user.dto.toUserInfo
+import com.willaapps.core.data.user.dto.toUserInfoSerializable
 import com.willaapps.core.domain.user.UserInfo
 import com.willaapps.core.domain.user.UserStorage
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +32,8 @@ class UserStorageImpl(
             userInfo?.let { resetDailyIfNecessary(it) }
 
             try {
-                Json.decodeFromString<UserInfoSerializable>(preferences[KEY_USER_INFO] ?: "").toUserInfo()
+                Json.decodeFromString<UserInfoSerializable>(preferences[KEY_USER_INFO] ?: "")
+                    .toUserInfo()
             } catch (e: Exception) {
                 null
             }
@@ -58,7 +62,6 @@ class UserStorageImpl(
     }
 
     override suspend fun clearUserInfo() {
-        // TODO - dataStore not clearing data
         dataStore.edit { preferences ->
             preferences.remove(KEY_USER_INFO)
             preferences.clear()
@@ -67,20 +70,17 @@ class UserStorageImpl(
     }
 
     private suspend fun resetDailyIfNecessary(userInfo: UserInfo) {
-        // TODO - encapsulate
-        val lastDayPlayed = userInfo.lastPlayedTimestamp
-            .withZoneSameInstant(ZoneId.of("UTC"))?.dayOfMonth
-        val nextDayAfterPlay = userInfo.lastPlayedTimestamp
-            .withZoneSameInstant(ZoneId.of("UTC"))?.plusDays(1)?.dayOfMonth
-        val today = ZonedDateTime.now()
-            .withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth
+        val dateItem = userInfo.getDateItem()
 
-        val newDailyStreak = if (today == lastDayPlayed || today == nextDayAfterPlay) {
+        val newDailyStreak = if (dateItem.today == dateItem.lastDayPlayed
+            || dateItem.today == dateItem.nextDayAfterPlay
+        ) {
             userInfo.dailyStreak
         } else {
             0
         }
-        val newCurrentGoal = if (today != lastDayPlayed) 0 else userInfo.currentGoal
+        val newCurrentGoal =
+            if (dateItem.today != dateItem.lastDayPlayed) 0 else userInfo.currentGoal
 
         if (newCurrentGoal == userInfo.currentGoal && newDailyStreak == userInfo.dailyStreak) {
             return
@@ -95,17 +95,13 @@ class UserStorageImpl(
     }
 
     private fun increaseDailyGoal(userInfo: UserInfo): UserInfo {
-        val lastDayPlayed = userInfo.lastPlayedTimestamp
-            .withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth
-        val nextDayAfterPlay = userInfo.lastPlayedTimestamp
-            .withZoneSameInstant(ZoneId.of("UTC")).plusDays(1).dayOfMonth
-        val today = ZonedDateTime.now()
-            .withZoneSameInstant(ZoneId.of("UTC")).dayOfMonth
+        val dateItem = userInfo.getDateItem()
 
-        val newCurrentGoal = if (today != lastDayPlayed) 1 else userInfo.currentGoal + 1
-        val newDailyStreak = if (today == lastDayPlayed) {
+        val newCurrentGoal =
+            if (dateItem.today != dateItem.lastDayPlayed) 1 else userInfo.currentGoal + 1
+        val newDailyStreak = if (dateItem.today == dateItem.lastDayPlayed) {
             if (userInfo.dailyStreak == 0) 1 else userInfo.dailyStreak
-        } else if (today != nextDayAfterPlay) {
+        } else if (dateItem.today != dateItem.nextDayAfterPlay) {
             1
         } else {
             userInfo.dailyStreak + 1

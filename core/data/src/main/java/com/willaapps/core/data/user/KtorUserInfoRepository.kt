@@ -2,6 +2,10 @@ package com.willaapps.core.data.user
 
 import com.willaapps.core.data.networking.get
 import com.willaapps.core.data.networking.post
+import com.willaapps.core.data.user.dto.UserInfoRequest
+import com.willaapps.core.data.user.dto.UserInfoResponse
+import com.willaapps.core.data.user.dto.toUserInfo
+import com.willaapps.core.data.user.dto.toUserInfoSerializable
 import com.willaapps.core.domain.auth.SessionStorage
 import com.willaapps.core.domain.user.UserInfo
 import com.willaapps.core.domain.user.UserInfoRepository
@@ -36,7 +40,6 @@ class KtorUserInfoRepository(
                     }
                     .collect { userInfo ->
                         if (userInfo != null) {
-                            // TODO - find better solution
                             if (userInfo.userId != sessionStorage.get()?.userId) {
                                 userStorage.setUserInfo(result.data.userInfo.toUserInfo())
                                 return@collect
