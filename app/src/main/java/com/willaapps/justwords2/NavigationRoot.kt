@@ -1,5 +1,15 @@
 package com.willaapps.justwords2
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -34,7 +44,7 @@ fun NavigationRoot(
         userGraph(navController)
     }
 }
-// TODO - animations between screens
+
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation(
         startDestination = "intro",
@@ -50,7 +60,27 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                 }
             )
         }
-        composable(route = "register") {
+        composable(
+            route = "register",
+            enterTransition = {
+                slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    ),
+                    initialOffsetY = { it / 2 }
+                )
+            },
+            exitTransition = {
+                slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    ),
+                    targetOffsetY = { it / 2 }
+                )
+            }
+        ) {
             RegisterScreenRoot(
                 onSignInClick = {
                     navController.navigate("login") {
@@ -73,7 +103,27 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                 }
             )
         }
-        composable(route = "login") {
+        composable(
+            route = "login",
+            enterTransition = {
+                slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    ),
+                    initialOffsetY = { it / 2 }
+                )
+            },
+            exitTransition = {
+                slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    ),
+                    targetOffsetY = { it / 2 }
+                )
+            }
+        ) {
             LoginScreenRoot(
                 onBackClick = {
                     navController.navigateUp()
@@ -104,7 +154,12 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
         startDestination = "start",
         route = "word"
     ) {
-        composable("start") {
+        composable(
+            route = "start",
+            enterTransition = {
+                fadeIn()
+            }
+        ) {
             StartScreenRoot(
                 onUserClick = { navController.navigate("user") },
                 onShopClick = { navController.navigate("shop") },
@@ -122,7 +177,35 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
                 navArgument(name = "bookId") {
                     type = NavType.StringType
                 }
-            )
+            ),
+            enterTransition = {
+                slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = {
+                slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            }
         ) {
             SetListScreenRoot(
                 onBackClick = {
@@ -148,7 +231,13 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
                 navArgument(name = "groupNumber") {
                     type = NavType.IntType
                 },
-            )
+            ),
+            enterTransition = {
+                scaleIn()
+            },
+            exitTransition = {
+                scaleOut()
+            }
         ) {
             WordScreenRoot(
                 onBackClick = {
@@ -169,7 +258,37 @@ private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
         startDestination = "shopBooks",
         route = "shop"
     ) {
-        composable("shopBooks") {
+        composable(
+            route = "shopBooks",
+            enterTransition = {
+                slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = {
+                slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            }
+        ) {
             ShopScreenRoot(
                 onBackClick = { navController.navigateUp() },
                 onShopBookClick = { bookId ->
@@ -183,7 +302,35 @@ private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
                 navArgument(name = "bookId") {
                     type = NavType.StringType
                 }
-            )
+            ),
+            enterTransition = {
+                slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = {
+                slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            }
         ) {
             ShopSetScreenRoot(
                 onBackClick = { navController.navigateUp() }
@@ -197,7 +344,37 @@ private fun NavGraphBuilder.userGraph(navController: NavHostController) {
         startDestination = "profile",
         route = "user"
     ) {
-        composable("profile") {
+        composable(
+            route = "profile",
+            enterTransition = {
+                slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = {
+                slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            }
+            ) {
             ProfileScreenRoot(
                 onBackClick = { navController.navigateUp() },
                 onEditProfileClick = { navController.navigate("editProfile") },
@@ -210,7 +387,37 @@ private fun NavGraphBuilder.userGraph(navController: NavHostController) {
                 }
             )
         }
-        composable("editProfile") {
+        composable(
+            route = "editProfile",
+            enterTransition = {
+                slideInVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            },
+            exitTransition = { ExitTransition.None },
+            popEnterTransition = { EnterTransition.None },
+            popExitTransition = {
+                slideOutVertically(
+                    animationSpec = tween(
+                        durationMillis = 300,
+                        easing = LinearEasing
+                    )
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 450,
+                        easing = LinearEasing
+                    )
+                )
+            }
+        ) {
             EditProfileScreenRoot(
                 onNavigateBack = { navController.navigateUp() }
             )

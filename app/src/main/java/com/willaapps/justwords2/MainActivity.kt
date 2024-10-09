@@ -16,7 +16,6 @@ class MainActivity : ComponentActivity() {
     private val viewModel by viewModel<MainViewModel>()
 
     // TODO - fix splashScreen logo
-    // TODO - delete redundant libs from catalog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
