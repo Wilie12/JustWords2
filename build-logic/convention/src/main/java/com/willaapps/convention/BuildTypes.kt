@@ -36,7 +36,10 @@ internal fun Project.configureBuildTypes(
                             configureDebugBuildType()
                         }
                         release {
-                            configureReleaseBuildType(commonExtension)
+                            configureReleaseBuildType(
+                                commonExtension = commonExtension,
+                                minifyEnabled = false
+                            )
                         }
                     }
                 }
@@ -50,11 +53,12 @@ private fun BuildType.configureDebugBuildType() {
 }
 
 private fun BuildType.configureReleaseBuildType(
-    commonExtension: CommonExtension<*, *, *, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    minifyEnabled: Boolean = true
 ) {
     buildConfigField("String", "BASE_URL", "\"http://192.168.0.61:8080\"")
 
-    isMinifyEnabled = true
+    isMinifyEnabled = minifyEnabled
     proguardFiles(
         commonExtension.getDefaultProguardFile("proguard-android-optimize.txt"),
         "proguard-rules.pro"

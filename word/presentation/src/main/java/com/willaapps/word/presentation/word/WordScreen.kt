@@ -3,6 +3,7 @@
 
 package com.willaapps.word.presentation.word
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -102,6 +103,7 @@ fun WordScreen(
                             .clip(RoundedCornerShape(100f))
                             .background(Color(0xFFD7D9CE))
                             .padding(16.dp)
+                            .animateContentSize()
                     ) {
                         when (state.buttonOption) {
                             ButtonOption.BUTTON_FINISH -> {

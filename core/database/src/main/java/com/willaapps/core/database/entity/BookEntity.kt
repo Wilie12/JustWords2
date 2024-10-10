@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.bson.types.ObjectId
 
-@Entity
+@Entity(tableName = "BookEntity")
 data class BookEntity(
     val name: String,
     val color: Int,

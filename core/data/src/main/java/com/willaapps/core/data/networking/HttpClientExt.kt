@@ -5,7 +5,6 @@ import com.willaapps.core.domain.util.DataError
 import com.willaapps.core.domain.util.Result
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.request.delete
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -39,20 +38,6 @@ suspend inline fun <reified Request, reified Response: Any> HttpClient.post(
         post {
             url(constructRoute(route))
             setBody(body)
-        }
-    }
-}
-
-suspend inline fun <reified Response: Any> HttpClient.delete(
-    route: String,
-    queryParameters: Map<String, Any?> = mapOf()
-): Result<Response, DataError.Network> {
-    return safeCall {
-        delete {
-            url(constructRoute(route))
-            queryParameters.forEach { (key, value) ->
-                parameter(key, value)
-            }
         }
     }
 }

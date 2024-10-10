@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.bson.types.ObjectId
 
-@Entity
+@Entity(tableName = "SetEntity")
 data class SetEntity(
     val name: String,
     val bookId: String,
