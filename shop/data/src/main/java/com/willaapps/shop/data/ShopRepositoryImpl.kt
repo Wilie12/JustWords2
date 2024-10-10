@@ -104,7 +104,7 @@ class ShopRepositoryImpl(
         }
     }
 
-    private fun getRemoteWordSetsFlow(bookId: String) = flow<List<ShopWordSet>> {
+    private fun getRemoteWordSetsFlow(bookId: String) = flow {
         when (val result = remoteShopDataSource.getWordSetsById(bookId)) {
             is Result.Error -> {
                 emit(emptyList())

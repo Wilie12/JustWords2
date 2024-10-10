@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "HistoryPendingSyncEntity")
 data class HistoryPendingSyncEntity(
     @Embedded val wordHistory: HistoryEntity,
     @PrimaryKey(autoGenerate = false)

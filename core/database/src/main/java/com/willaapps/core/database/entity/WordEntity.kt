@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.bson.types.ObjectId
 
-@Entity
+@Entity(tableName = "WordEntity")
 data class WordEntity(
     val sentence: String,
     val wordPl: String,

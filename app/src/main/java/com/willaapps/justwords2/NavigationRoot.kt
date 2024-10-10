@@ -2,8 +2,6 @@ package com.willaapps.justwords2
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
@@ -63,22 +61,10 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
         composable(
             route = "register",
             enterTransition = {
-                slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    ),
-                    initialOffsetY = { it / 2 }
-                )
+                slideInVertically(initialOffsetY = { it / 2 })
             },
             exitTransition = {
-                slideOutVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    ),
-                    targetOffsetY = { it / 2 }
-                )
+                slideOutVertically(targetOffsetY = { it / 2 })
             }
         ) {
             RegisterScreenRoot(
@@ -106,22 +92,10 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
         composable(
             route = "login",
             enterTransition = {
-                slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    ),
-                    initialOffsetY = { it / 2 }
-                )
+                slideInVertically(initialOffsetY = { it / 2 })
             },
             exitTransition = {
-                slideOutVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    ),
-                    targetOffsetY = { it / 2 }
-                )
+                slideOutVertically(targetOffsetY = { it / 2 })
             }
         ) {
             LoginScreenRoot(
@@ -179,32 +153,12 @@ private fun NavGraphBuilder.wordGraph(navController: NavHostController) {
                 }
             ),
             enterTransition = {
-                slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideInVertically() + fadeIn()
             },
-            exitTransition = { ExitTransition.None },
+            exitTransition = { fadeOut() },
             popEnterTransition = { EnterTransition.None },
             popExitTransition = {
-                slideOutVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideOutVertically() + fadeOut()
             }
         ) {
             SetListScreenRoot(
@@ -261,32 +215,12 @@ private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
         composable(
             route = "shopBooks",
             enterTransition = {
-                slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideInVertically() + fadeIn()
             },
-            exitTransition = { ExitTransition.None },
+            exitTransition = { fadeOut() },
             popEnterTransition = { EnterTransition.None },
             popExitTransition = {
-                slideOutVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideOutVertically() + fadeOut()
             }
         ) {
             ShopScreenRoot(
@@ -304,32 +238,12 @@ private fun NavGraphBuilder.shopGraph(navController: NavHostController) {
                 }
             ),
             enterTransition = {
-                slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideInVertically() + fadeIn()
             },
             exitTransition = { ExitTransition.None },
             popEnterTransition = { EnterTransition.None },
             popExitTransition = {
-                slideOutVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideOutVertically() + fadeOut()
             }
         ) {
             ShopSetScreenRoot(
@@ -347,32 +261,12 @@ private fun NavGraphBuilder.userGraph(navController: NavHostController) {
         composable(
             route = "profile",
             enterTransition = {
-                slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideInVertically() + fadeIn()
             },
-            exitTransition = { ExitTransition.None },
+            exitTransition = { fadeOut() },
             popEnterTransition = { EnterTransition.None },
             popExitTransition = {
-                slideOutVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideOutVertically() + fadeOut()
             }
             ) {
             ProfileScreenRoot(
@@ -390,32 +284,12 @@ private fun NavGraphBuilder.userGraph(navController: NavHostController) {
         composable(
             route = "editProfile",
             enterTransition = {
-                slideInVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideInVertically() + fadeIn()
             },
             exitTransition = { ExitTransition.None },
             popEnterTransition = { EnterTransition.None },
             popExitTransition = {
-                slideOutVertically(
-                    animationSpec = tween(
-                        durationMillis = 300,
-                        easing = LinearEasing
-                    )
-                ) + fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 450,
-                        easing = LinearEasing
-                    )
-                )
+                slideOutVertically() + fadeOut()
             }
         ) {
             EditProfileScreenRoot(

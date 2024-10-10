@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class SetListViewModel(
-    private val localWordDataSource: LocalWordDataSource,
-    private val savedStateHandle: SavedStateHandle
+    localWordDataSource: LocalWordDataSource,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     var state by mutableStateOf(SetListState())

@@ -18,7 +18,7 @@
     <string name="at_least_x_characters">At least %d characters</string>
     <string name="at_least_one_number">At least one number</string>
     <string name="contains_lowercase_character">Contains lowercase character</string>
-    <string name="contrains_uppercase_character">Contains uppercase character</string>
+    <string name="contains_uppercase_character">Contains uppercase character</string>
     <string name="sign_up">Sign up</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="sign_in">Sign in</string>
