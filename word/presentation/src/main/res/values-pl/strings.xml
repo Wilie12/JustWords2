@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Welcome, %s</string>
+    <string name="profile">Profil</string>
+    <string name="daily_goal">Dzienny cel</string>
+    <string name="practice_more_to_finish_daily_goal">Ćwicz więcej, aby osiągnąć dzienny cel</string>
+    <string name="choose_book">Wybierz książkę</string>
+    <string name="words">Słowa</string>
+    <string name="good">Dobrze</string>
+    <string name="bad">Źle</string>
+    <string name="answer">Odpowiedź</string>
+    <string name="check">Sprawdź</string>
+    <string name="next">Następny</string>
+    <string name="finish">Zakończ</string>
+    <string name="summary">Podsumowanie</string>
+    <string name="you_have_repeated_words">Powtórzono %d słów.</string>
+    <string name="you_have_guessed_of_perfectly">Odgadłeś %d z %d bezbłędnie.</string>
+    <string name="below_average">Poniżej średniej</string>
+    <string name="average">Średnio</string>
+    <string name="above_average">Powyżej średniej</string>
+    <string name="open_previous_words">Otwórz poprzednie słowa</string>
+</resources>
