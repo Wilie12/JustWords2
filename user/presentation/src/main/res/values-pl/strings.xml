@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile">Profil</string>
+    <string name="games_played">%d rozegranych gier</string>
+    <string name="edit_profile">Edytuj profil</string>
+    <string name="logout">Wyloguj się</string>
+    <string name="summary">Podsumowanie</string>
+    <string name="daily_streak">Codzienna seria</string>
+    <string name="best_streak">Najlepsza seria</string>
+    <string name="level">Poziom</string>
+    <string name="history">Historia</string>
+    <string name="stats">Statystyki</string>
+    <string name="daily">Dzienne</string>
+    <string name="today">Dzisiaj</string>
+    <string name="yesterday">Wczoraj</string>
+    <string name="weekly">Tygodniowe</string>
+    <string name="nothing_to_display_play_now">Nie ma nic do wyświetlenia, zagraj teraz.</string>
+    <string name="enter_new_username">Wprowadź nową nazwę użytkownika</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="enter_new_daily_goal">Wprowadź nowy cel dzienny</string>
+    <string name="daily_goal">Cel dzienny</string>
+    <string name="save">Zapisz</string>
+    <string name="cancel">Anuluj</string>
+    <string name="profile_edited_successfully">Edycja profilu zakończona sukcesem!</string>
+    <string name="are_you_sure">Czy jesteś pewien?</string>
+    <string name="you_are_trying_to_logout_all_data_that_wasn_t_sync_with_internet_can_be_lost">Próbujesz się wylogować. Wszystkie dane, które nie zostały zsynchronizowane z serwerem, mogą zostać utracone.</string>
+    <string name="you_have_logout_successfully">Wylogowanie zakończyło się powodzeniem!</string>
+</resources>
