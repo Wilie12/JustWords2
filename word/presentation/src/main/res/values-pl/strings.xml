@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome">Welcome, %s</string>
+    <string name="welcome">Witaj, %s</string>
     <string name="profile">Profil</string>
     <string name="daily_goal">Dzienny cel</string>
     <string name="practice_more_to_finish_daily_goal">Ćwicz więcej, aby osiągnąć dzienny cel</string>

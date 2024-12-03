@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -32,6 +33,7 @@ fun SummaryItem(
         Text(
             text = name,
             color = Color(0xFFD7D9CE),
+            textAlign = TextAlign.Center,
             fontSize = 14.sp
         )
         Text(
