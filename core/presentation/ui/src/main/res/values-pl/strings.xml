@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_disk_full">Nie udało się zapisać elementu, ponieważ dysk jest pełny.</string>
+    <string name="error_request_timeout">Żądanie przekroczyło limit czasu.</string>
+    <string name="error_too_many_requests">Osiągnąłeś limit stawek.</string>
+    <string name="error_no_internet">Nie można połączyć się z serwerem, sprawdź połączenie.</string>
+    <string name="error_payload_too_large">Plik, który próbujesz przesłać, jest zbyt duży.</string>
+    <string name="error_server_error">Ups, coś poszło nie tak, spróbuj ponownie.</string>
+    <string name="error_serialization">Ups, nie można przeanalizować danych.</string>
+    <string name="error_unknown">Wystąpił nieznany błąd.</string>
+</resources>
