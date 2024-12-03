@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shop">Sklep</string>
+    <string name="successfully_downloaded_a_new_set">Pomyślnie pobrano nowy zestaw</string>
+    <string name="downloading">Pobieranie...</string>
+    <string name="oops_something_went_wrong">Ups. Coś poszło nie tak...</string>
+    <string name="word_set">Zestaw słów</string>
+</resources>
