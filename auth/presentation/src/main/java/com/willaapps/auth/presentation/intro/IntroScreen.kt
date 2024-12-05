@@ -175,7 +175,7 @@ fun IntroScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     ActionButton(
-                        text = "Sign in",
+                        text = stringResource(id = R.string.sign_in),
                         isLoading = false,
                         onClick = {
                             onAction(IntroAction.OnSignInClick)
@@ -184,7 +184,7 @@ fun IntroScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     OutlinedActionButton(
-                        text = "Sign up",
+                        text = stringResource(id = R.string.sign_up),
                         isLoading = false,
                         onClick = {
                             onAction(IntroAction.OnSignUpClick)

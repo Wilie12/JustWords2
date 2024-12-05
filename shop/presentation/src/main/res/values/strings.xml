@@ -4,6 +4,6 @@
     <string name="successfully_downloaded_a_new_set">Successfully downloaded a new set</string>
     <string name="downloading">Downloading…</string>
     <string name="oops_something_went_wrong">Oops. Something went wrong…</string>
-    <string name="sad">:(</string>
+    <string name="sad" translatable="false">:(</string>
     <string name="word_set">Word set</string>
 </resources>

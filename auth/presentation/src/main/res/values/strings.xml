@@ -3,15 +3,15 @@
     <string name="start_learning_now">Start Learning Now</string>
     <string name="take_your_first_step_towards_mastering_a_new_language_today">Take your first step towards mastering a new language today!</string>
     <string name="register">Register</string>
-    <string name="bg_text_1">score strzelić achieve osiągnąć compete rywalizować equipment sprzęt</string>
-    <string name="bg_text_2">brand marka hire zatrudnić outfit strój encourage zachęcać blow wiać</string>
-    <string name="bg_text_3">donate ofiarować cover przykryć flood powódź increase zwiększać</string>
-    <string name="bg_text_4">shake potrząsać violently gwałtownie adventure przygoda cave jaskinia</string>
+    <string name="bg_text_1" translatable="false">score strzelić achieve osiągnąć compete rywalizować equipment sprzęt</string>
+    <string name="bg_text_2" translatable="false">brand marka hire zatrudnić outfit strój encourage zachęcać blow wiać</string>
+    <string name="bg_text_3" translatable="false">donate ofiarować cover przykryć flood powódź increase zwiększać</string>
+    <string name="bg_text_4" translatable="false">shake potrząsać violently gwałtownie adventure przygoda cave jaskinia</string>
     <string name="username">Username</string>
     <string name="enter_your_username">Enter your username</string>
     <string name="username_can_t_be_empty">Username can\'t be empty</string>
     <string name="enter_your_email">Enter your email</string>
-    <string name="email">Email</string>
+    <string name="email" translatable="false">Email</string>
     <string name="must_be_a_valid_email">Must be a valid email</string>
     <string name="enter_your_password">Enter your password</string>
     <string name="password">Password</string>
