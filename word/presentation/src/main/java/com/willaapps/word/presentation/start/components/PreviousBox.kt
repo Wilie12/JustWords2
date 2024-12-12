@@ -48,7 +48,7 @@ fun PreviousBox(
             .padding(16.dp)
     ) {
         Text(
-            text = "Previous",
+            text = stringResource(R.string.previous),
             fontSize = 20.sp,
             color = Color(0xFF121211)
         )
