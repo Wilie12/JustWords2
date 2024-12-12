@@ -1,16 +1,18 @@
 package com.willaapps.user.presentation.profile.util
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import com.willaapps.core.domain.user.history.WordHistory
 import com.willaapps.user.domain.profile.ProfileLevel
+import com.willaapps.user.presentation.R
 
 @Composable
 fun profileLevelToString(profileLevel: ProfileLevel): String {
     return when (profileLevel) {
-        ProfileLevel.BEGINNER -> "Beginner"
-        ProfileLevel.INTERMEDIATE -> "Intermediate"
-        ProfileLevel.ADVANCED -> "Advanced"
-        ProfileLevel.UNKNOWN -> "Unknown"
+        ProfileLevel.BEGINNER -> stringResource(R.string.beginner)
+        ProfileLevel.INTERMEDIATE -> stringResource(R.string.intermediate)
+        ProfileLevel.ADVANCED -> stringResource(R.string.advanced)
+        ProfileLevel.UNKNOWN -> stringResource(R.string.unknown)
     }
 }
 

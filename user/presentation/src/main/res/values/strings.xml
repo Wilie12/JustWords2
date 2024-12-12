@@ -26,4 +26,8 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="you_are_trying_to_logout_all_data_that_wasn_t_sync_with_internet_can_be_lost">You are trying to logout. All data that wasn\'t sync with server can be lost.</string>
     <string name="you_have_logout_successfully">You have logout successfully!</string>
+    <string name="beginner">Beginner</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="advanced">Advanced</string>
+    <string name="unknown">Unknown</string>
 </resources>
